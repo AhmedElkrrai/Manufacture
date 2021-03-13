@@ -1,0 +1,27 @@
+package com.example.manufacture.model;
+
+import android.content.Context;
+
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+
+import com.example.manufacture.data.ComponentDAO;
+
+@Database(entities = Component.class, version = 1)
+public abstract class ComponentDatabase extends RoomDatabase {
+
+    private static ComponentDatabase instance;
+
+    public abstract ComponentDAO componentDAO();
+
+    public static synchronized ComponentDatabase getInstance(Context context) {
+        if (instance == null) {
+            instance = Room.databaseBuilder(context.getApplicationContext(),
+                    ComponentDatabase.class, "component_table")
+                    .fallbackToDestructiveMigration()
+                    .build();
+        }
+        return instance;
+    }
+}

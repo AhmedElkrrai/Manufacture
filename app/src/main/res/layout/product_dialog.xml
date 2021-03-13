@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="@dimen/_19sdp"
+            android:layout_height="@dimen/_13sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:background="@drawable/ic_arrow"
+            app:backgroundTint="#353535" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/product_name_edit_text"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/_300sdp"
+            android:layout_height="@dimen/_58sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/_48sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            app:boxCornerRadiusBottomEnd="@dimen/_12sdp"
+            app:boxCornerRadiusBottomStart="@dimen/_12sdp"
+            app:boxCornerRadiusTopEnd="@dimen/_12sdp"
+            app:boxCornerRadiusTopStart="@dimen/_12sdp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="اسم المنتج"
+                android:inputType="textCapCharacters"
+                android:maxLength="32"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/primary"
+                android:textSize="14sp"
+                tools:ignore="HardcodedText" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/components_edit_text"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/_210sdp"
+            android:layout_height="@dimen/_58sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/_110sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:hint="اسم المكون"
+            app:boxCornerRadiusBottomEnd="@dimen/_12sdp"
+            app:boxCornerRadiusBottomStart="@dimen/_12sdp"
+            app:boxCornerRadiusTopEnd="@dimen/_12sdp"
+            app:boxCornerRadiusTopStart="@dimen/_12sdp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top"
+                android:imeOptions="actionNext"
+                android:inputType="textCapCharacters"
+                android:textColor="@color/primary"
+                android:textSize="14sp"
+                tools:ignore="HardcodedText" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/component_amount_edit_text"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_58sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/_110sdp"
+            android:layout_marginEnd="@dimen/_236sdp"
+            android:hint="الكمية"
+            app:boxCornerRadiusBottomEnd="@dimen/_12sdp"
+            app:boxCornerRadiusBottomStart="@dimen/_12sdp"
+            app:boxCornerRadiusTopEnd="@dimen/_12sdp"
+            app:boxCornerRadiusTopStart="@dimen/_12sdp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top"
+                android:imeOptions="actionNext"
+                android:inputType="phone"
+                android:textColor="@color/primary"
+                android:textSize="14sp"
+                tools:ignore="HardcodedText" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageButton
+            android:id="@+id/add_component"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="@dimen/_56sdp"
+            android:layout_height="@dimen/_56sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/_196sdp"
+            android:layout_marginEnd="@dimen/_83sdp"
+            android:background="@drawable/edit_round_5"
+            android:src="@drawable/ic_add_2" />
+
+        <ImageButton
+            android:id="@+id/add_component_product"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="@dimen/_56sdp"
+            android:layout_height="@dimen/_56sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/_196sdp"
+            android:layout_marginEnd="@dimen/_133sdp"
+            android:background="@drawable/edit_round_5"
+            android:src="@drawable/ic_add_2" />
+
+        <ImageButton
+            android:id="@+id/previous_component"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="@dimen/_56sdp"
+            android:layout_height="@dimen/_56sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/_196sdp"
+            android:layout_marginEnd="@dimen/_203sdp"
+            android:background="@drawable/edit_round_5"
+            android:src="@drawable/ic_history" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_3sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/_80sdp"
+            android:background="#A4CACAE1" />
+
+        <Button
+            android:id="@+id/add_product_BT"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="@dimen/_124sdp"
+            android:layout_height="@dimen/_48sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_24sdp"
+            android:background="@drawable/edit_round_2"
+            android:text="حفظ"
+            android:textColor="@color/weird_green"
+            app:backgroundTint="@color/white" />
+
+        <View
+            android:layout_width="@dimen/_124sdp"
+            android:layout_height="@dimen/_48sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_24sdp"
+            android:background="@drawable/edit_round_3" />
+
+        <Button
+            android:id="@+id/cancel_BT"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="@dimen/_124sdp"
+            android:layout_height="@dimen/_48sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_24sdp"
+            android:background="@drawable/edit_round_2"
+            android:text="الغاء"
+            android:textColor="@color/coral"
+            app:backgroundTint="@color/white" />
+
+        <View
+            android:layout_width="@dimen/_124sdp"
+            android:layout_height="@dimen/_48sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_24sdp"
+            android:background="@drawable/edit_round_4" />
+
+    </RelativeLayout>
+</layout>
