@@ -1,4 +1,4 @@
-package com.example.manufacture.ui;
+package com.example.manufacture.ui.dialog_fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,14 +14,10 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.manufacture.R;
 import com.example.manufacture.databinding.ComponentDialogBinding;
-import com.example.manufacture.databinding.ProductDialogBinding;
 import com.example.manufacture.model.Component;
-import com.example.manufacture.model.Product;
 import com.example.manufacture.ui.components.ComponentsViewModel;
-import com.example.manufacture.ui.home.ProductViewModel;
 
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class ComponentDialog extends DialogFragment {
     private ComponentsViewModel componentsViewModel;
@@ -47,8 +43,8 @@ public class ComponentDialog extends DialogFragment {
         //update component
         binding.updateComponentBT.setOnClickListener(v -> {
             String componentName = binding.componentNameEditText.getEditText().getText().toString();
-            int availableAmount = Integer.parseInt(binding.componentAvailableAmountEditText.getEditText().getText().toString());
-            int minAmount = Integer.parseInt(binding.componentMinAmountEditText.getEditText().getText().toString());
+            String availableAmount = binding.componentAvailableAmountEditText.getEditText().getText().toString();
+            String minAmount = binding.componentMinAmountEditText.getEditText().getText().toString();
             String providerName = binding.componentProviderNameEditText.getEditText().getText().toString();
 
             component.setComponentName(componentName);

@@ -1,47 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
     </data>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp">
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        app:background="@drawable/edit_round_6"
+        app:cardElevation="0dp"
+        app:cardMaxElevation="0dp"
+        app:cardUseCompatPadding="true">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/edit_round_6"
+            android:backgroundTint="@color/light_grey_background_borders">
 
             <TextView
                 android:id="@+id/component_name_item"
                 android:layout_width="wrap_content"
-                android:padding="@dimen/_16sdp"
-                android:layout_height="48dp" />
+                android:layout_height="48dp"
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:fontFamily="@font/noto_sans_arabic_semi_bold"
+                android:text="assss"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:padding="@dimen/_16sdp" />
 
             <TextView
                 android:id="@+id/component_available_amount_item"
                 android:layout_width="wrap_content"
-                android:padding="@dimen/_16sdp"
-                android:layout_height="48dp" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/weird_green"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:padding="@dimen/_12sdp" />
 
             <TextView
                 android:id="@+id/component_min_amount_item"
                 android:layout_width="wrap_content"
-                android:padding="@dimen/_16sdp"
-                android:layout_height="48dp" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/coral"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:padding="@dimen/_12sdp" />
 
-            <TextView
-                android:id="@+id/component_provider_name_item"
-                android:layout_width="wrap_content"
-                android:padding="@dimen/_4sdp"
-                android:layout_height="48dp" />
-
-        </LinearLayout>
+        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 </layout>

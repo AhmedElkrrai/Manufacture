@@ -1,4 +1,4 @@
-package com.example.manufacture.ui;
+package com.example.manufacture.ui.dialog_fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -52,7 +52,7 @@ public class ProductDialog extends DialogFragment {
                 }
 
                 componentsList.append(componentName).append(":").append(componentAmount).append(":");
-                componentsViewModel.insert(new Component(componentName, "provider", 0,0));
+                componentsViewModel.insert(new Component(componentName, "provider", "0","0"));
 
                 binding.componentsEditText.getEditText().setText("");
                 binding.componentAmountEditText.getEditText().setText("");

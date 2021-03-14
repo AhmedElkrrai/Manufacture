@@ -1,4 +1,4 @@
-package com.example.manufacture.ui;
+package com.example.manufacture.ui.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.manufacture.R;
 import com.example.manufacture.model.Component;
-import com.example.manufacture.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +27,8 @@ public class ComponentAdapter extends RecyclerView.Adapter<ComponentAdapter.Comp
     @Override
     public void onBindViewHolder(@NonNull ComponentHolder holder, int position) {
         holder.component_name.setText(components.get(position).getComponentName());
-        holder.available_amount.setText(String.valueOf(components.get(position).getAvailableAmount()));
-        holder.min_amount.setText(String.valueOf(components.get(position).getMinAmount()));
-        holder.providerName.setText(components.get(position).getProviderName());
+        holder.available_amount.setText(components.get(position).getAvailableAmount());
+        holder.min_amount.setText(components.get(position).getMinAmount());
     }
 
     @Override
@@ -51,7 +49,6 @@ public class ComponentAdapter extends RecyclerView.Adapter<ComponentAdapter.Comp
             component_name = itemView.findViewById(R.id.component_name_item);
             available_amount = itemView.findViewById(R.id.component_available_amount_item);
             min_amount = itemView.findViewById(R.id.component_min_amount_item);
-            providerName = itemView.findViewById(R.id.component_provider_name_item);
 
             itemView.setOnClickListener(v -> {
                 if (listener != null) {

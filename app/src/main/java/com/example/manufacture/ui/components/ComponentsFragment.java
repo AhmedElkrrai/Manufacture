@@ -9,13 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.manufacture.R;
 import com.example.manufacture.databinding.FragmentComponentsBinding;
-import com.example.manufacture.ui.ComponentAdapter;
-import com.example.manufacture.ui.ComponentDialog;
+import com.example.manufacture.ui.adapter.ComponentAdapter;
+import com.example.manufacture.ui.dialog_fragment.ComponentDialog;
 
 public class ComponentsFragment extends Fragment {
 
@@ -31,7 +31,7 @@ public class ComponentsFragment extends Fragment {
 
         ComponentAdapter mAdapter = new ComponentAdapter();
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
         mRecyclerView.setAdapter(mAdapter);
 
         componentsViewModel.getAllComponents().observe(getActivity(), components -> mAdapter.setList(components));

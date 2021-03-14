@@ -12,6 +12,8 @@ import com.example.manufacture.model.Product;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+
 @Dao
 public interface ComponentDAO {
     @Insert
@@ -22,6 +24,9 @@ public interface ComponentDAO {
 
     @Delete
     void delete(Component component);
+
+    @Query("SELECT * FROM component_table where componentName = :componentName")
+    Observable<Component> get(String componentName);
 
     @Query("SELECT * FROM component_table")
     LiveData<List<Component>> getAllComponents();

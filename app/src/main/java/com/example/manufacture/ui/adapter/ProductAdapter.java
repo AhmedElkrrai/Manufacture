@@ -1,8 +1,9 @@
-package com.example.manufacture.ui;
+package com.example.manufacture.ui.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,10 +42,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
 
     public static class ProductHolder extends RecyclerView.ViewHolder {
         public TextView productName;
+        public ImageButton detailsBT, produceBT;
 
         public ProductHolder(@NonNull View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.product_name_item);
+            detailsBT = itemView.findViewById(R.id.product_details_BT);
+            produceBT = itemView.findViewById(R.id.produceBT);
 
             itemView.setOnClickListener(v -> {
                 if (listener != null) {
@@ -53,11 +57,31 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
                         listener.onItemClicked(mProductsList.get(position));
                 }
             });
+
+            detailsBT.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION)
+                        listener.onDetailsClicked(mProductsList.get(position));
+                }
+            });
+
+            produceBT.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION)
+                        listener.onProduceClicked(mProductsList.get(position));
+                }
+            });
         }
     }
 
     public interface OnItemClickListener {
         void onItemClicked(Product product);
+
+        void onDetailsClicked(Product product);
+
+        void onProduceClicked(Product product);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

@@ -10,12 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.manufacture.ui.ProductAdapter;
-import com.example.manufacture.ui.ProductDialog;
+import com.example.manufacture.model.Product;
+import com.example.manufacture.ui.adapter.ProductAdapter;
+import com.example.manufacture.ui.dialog_fragment.DetailsDialog;
+import com.example.manufacture.ui.dialog_fragment.ProductDialog;
 import com.example.manufacture.R;
 import com.example.manufacture.databinding.FragmentHomeBinding;
 
@@ -43,9 +44,23 @@ public class HomeFragment extends Fragment {
 
         productViewModel.getAllProducts().observe(getActivity(), products -> mAdapter.setList(products));
 
-        mAdapter.setOnItemClickListener(product -> {
-            productViewModel.setProduct(product);
-            new ProductDialog().show(getFragmentManager(), "Update_Product_Dialog");
+        mAdapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClicked(Product product) {
+                productViewModel.setProduct(product);
+                new ProductDialog().show(getFragmentManager(), "Update_Product_Dialog");
+            }
+
+            @Override
+            public void onDetailsClicked(Product product) {
+                productViewModel.setProduct(product);
+                new DetailsDialog().show(getFragmentManager(), "Details_Dialog");
+            }
+
+            @Override
+            public void onProduceClicked(Product product) {
+                Toast.makeText(getActivity(), "onProduceClicked", Toast.LENGTH_SHORT).show();
+            }
         });
 
         return view;

@@ -7,19 +7,54 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp">
+        android:layout_height="@dimen/_106sdp">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginEnd="@dimen/_48sdp"
+                android:layout_marginStart="@dimen/_48sdp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:background="#A4CACAE1" />
 
             <TextView
                 android:id="@+id/product_name_item"
-                android:layout_width="match_parent"
-                android:layout_height="48dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans_arabic_semi_bold"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:text="assss" />
+
+            <ImageButton
+                android:id="@+id/product_details_BT"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="@dimen/_56sdp"
+                android:layout_height="@dimen/_56sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_83sdp"
+                android:background="@drawable/edit_round_5"
+                android:src="@drawable/ic_details" />
+
+            <ImageButton
+                android:id="@+id/produceBT"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="@dimen/_56sdp"
+                android:layout_height="@dimen/_56sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:background="@drawable/edit_round_5"
+                android:src="@drawable/ic_produce" />
 
         </RelativeLayout>
 
