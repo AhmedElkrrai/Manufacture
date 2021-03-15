@@ -1,6 +1,7 @@
 package com.example.manufacture.ui.dialog_fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,13 +40,6 @@ public class DetailsDialog extends DialogFragment {
         View view = binding.getRoot();
 
         componentsViewModel = ViewModelProviders.of(getActivity()).get(ComponentsViewModel.class);
-        List<Component> list = componentsViewModel.getAllComponents().getValue();
-        HashMap<String, Component> componentMap = new HashMap<>();
-
-        if (list != null) {
-            for (int i = 0; i < list.size(); i++)
-                componentMap.put(list.get(i).getComponentName(), list.get(i));
-        }
 
         //get Product
         productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
@@ -65,17 +60,22 @@ public class DetailsDialog extends DialogFragment {
         String componentsStr = product.getComponents();
         String[] componentsArray = componentsStr.split(":");
 
-        for (int i = 0; i < componentsArray.length; i += 2) {
-            String name = componentsArray[i];
-            String amount = componentsArray[i + 1];
 
-            if (componentMap.containsKey(name)) {
-                Component component = componentMap.get(name);
-                details.add(new Details(name, component.getProviderName(), component.getAvailableAmount(), component.getMinAmount(), amount));
-            }
-        }
+        binding.setLifecycleOwner(this);
 
         mAdapter.setList(details);
+
+        for (int i = 0; i < componentsArray.length; i += 2) {
+            int id = Integer.parseInt(componentsArray[i]);
+            String amount = componentsArray[i + 1];
+
+            componentsViewModel
+                    .getComponentById(id)
+                    .observe(getActivity(), component -> {
+                        details.add(new Details(component.getComponentName(), component.getProviderName(), component.getAvailableAmount(), component.getMinAmount(), amount));
+                        mAdapter.notifyDataSetChanged();
+                    });
+        }
 
         mRecyclerView.setAdapter(mAdapter);
         return view;

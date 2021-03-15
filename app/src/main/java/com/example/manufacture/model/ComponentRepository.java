@@ -3,8 +3,6 @@ package com.example.manufacture.model;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -39,7 +37,6 @@ public class ComponentRepository {
 
     public int insert(Component component) {
         new InsertComponentAsyncTask(componentDAO).execute(component);
-        Log.i("TAG", "sadbugs sharedPreferences " + sharedPreferences.getInt("rowID", 1));
         return sharedPreferences.getInt("rowID", 1);
     }
 
