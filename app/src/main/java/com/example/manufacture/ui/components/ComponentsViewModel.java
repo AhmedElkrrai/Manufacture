@@ -25,8 +25,8 @@ public class ComponentsViewModel extends AndroidViewModel {
         allComponents = repository.getAllComponents();
     }
 
-    public void insert(Component component) {
-        repository.insert(component);
+    public int insert(Component component) {
+        return repository.insert(component);
     }
 
     public void update(Component component) {
@@ -39,6 +39,10 @@ public class ComponentsViewModel extends AndroidViewModel {
 
     public LiveData<List<Component>> getAllComponents() {
         return allComponents;
+    }
+
+    public LiveData<Component> getComponentById(int id) {
+        return repository.getComponentById(id);
     }
 
     public Component getComponent() {

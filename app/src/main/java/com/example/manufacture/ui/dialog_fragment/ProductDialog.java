@@ -1,6 +1,7 @@
 package com.example.manufacture.ui.dialog_fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.manufacture.R;
@@ -51,8 +53,10 @@ public class ProductDialog extends DialogFragment {
                     return;
                 }
 
-                componentsList.append(componentName).append(":").append(componentAmount).append(":");
-                componentsViewModel.insert(new Component(componentName, "provider", "0","0"));
+                Component cc = new Component(componentName, "provider", "0", "0");
+                int id = componentsViewModel.insert(cc);
+                componentsList.append(id).append(":").append(componentAmount).append(":");
+                Log.i("TAG", "sadbugs onCreateView: " + id);
 
                 binding.componentsEditText.getEditText().setText("");
                 binding.componentAmountEditText.getEditText().setText("");
@@ -77,6 +81,8 @@ public class ProductDialog extends DialogFragment {
 
         if (getTag().equals("Update_Product_Dialog")) {
             binding.addComponentProduct.setVisibility(View.GONE);
+            binding.componentsEditText.getEditText().setEnabled(false);
+
             //get Product
             productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
             Product product = productViewModel.getProduct();
@@ -87,8 +93,9 @@ public class ProductDialog extends DialogFragment {
             String componentsStr = product.getComponents();
             String[] componentsArray = componentsStr.split(":");
 
-
-            binding.componentsEditText.getEditText().setText(componentsArray[0]);
+            componentsViewModel = ViewModelProviders.of(getActivity()).get(ComponentsViewModel.class);
+            componentsViewModel.getComponentById(Integer.parseInt(componentsArray[0]))
+                    .observe(getActivity(), component -> binding.componentsEditText.getEditText().setText(component.getComponentName()));
             binding.componentAmountEditText.getEditText().setText(componentsArray[1]);
 
             AtomicInteger x = new AtomicInteger(0);
@@ -102,7 +109,8 @@ public class ProductDialog extends DialogFragment {
                     x.addAndGet(2);
                     y.addAndGet(2);
                 }
-                binding.componentsEditText.getEditText().setText(componentsArray[x.get()]);
+                componentsViewModel.getComponentById(Integer.parseInt(componentsArray[x.get()]))
+                        .observe(getActivity(), component -> binding.componentsEditText.getEditText().setText(component.getComponentName()));
                 binding.componentAmountEditText.getEditText().setText(componentsArray[y.get()]);
             });
 
@@ -117,7 +125,6 @@ public class ProductDialog extends DialogFragment {
                     return;
                 }
 
-                componentsArray[x.get()] = componentName;
                 componentsArray[y.get()] = componentAmount;
 
                 binding.componentsEditText.getEditText().setText("");

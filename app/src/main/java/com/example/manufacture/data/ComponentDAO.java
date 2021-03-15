@@ -14,7 +14,7 @@ import java.util.List;
 @Dao
 public interface ComponentDAO {
     @Insert
-    void insert(Component component);
+    long insert(Component component);
 
     @Update
     void update(Component component);
@@ -24,4 +24,7 @@ public interface ComponentDAO {
 
     @Query("SELECT * FROM component_table")
     LiveData<List<Component>> getAllComponents();
+
+    @Query("SELECT * FROM component_table where id = :componentId")
+    LiveData<Component> getComponentById(int componentId);
 }

@@ -11,8 +11,8 @@ import java.util.List;
 
 public class ProductRepository {
 
-    private ProductDAO productDAO;
-    private LiveData<List<Product>> allProducts;
+    private final ProductDAO productDAO;
+    private final LiveData<List<Product>> allProducts;
 
     public ProductRepository(Application application) {
 

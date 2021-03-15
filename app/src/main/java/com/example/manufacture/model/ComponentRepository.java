@@ -1,7 +1,10 @@
 package com.example.manufacture.model;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -9,10 +12,15 @@ import com.example.manufacture.data.ComponentDAO;
 
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class ComponentRepository {
 
     private final ComponentDAO componentDAO;
     private final LiveData<List<Component>> allComponents;
+
+    public static final String SHARED_PREFS = "sharedPrefs";
+    private static SharedPreferences sharedPreferences;
 
     public ComponentRepository(Application application) {
 
@@ -21,10 +29,18 @@ public class ComponentRepository {
         componentDAO = componentDatabase.componentDAO();
 
         allComponents = componentDAO.getAllComponents();
+
+        sharedPreferences = application.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
     }
 
-    public void insert(Component component) {
+    public LiveData<Component> getComponentById(int id) {
+        return componentDAO.getComponentById(id);
+    }
+
+    public int insert(Component component) {
         new InsertComponentAsyncTask(componentDAO).execute(component);
+        Log.i("TAG", "sadbugs sharedPreferences " + sharedPreferences.getInt("rowID", 1));
+        return sharedPreferences.getInt("rowID", 1);
     }
 
     public void update(Component component) {
@@ -48,7 +64,12 @@ public class ComponentRepository {
 
         @Override
         protected Void doInBackground(Component... components) {
-            componentDAO.insert(components[0]);
+            long rowID = componentDAO.insert(components[0]);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt("rowID", (int) rowID + 1);
+            editor.apply();
+
             return null;
         }
     }
