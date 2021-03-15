@@ -47,14 +47,6 @@ public class ComponentsViewModel extends AndroidViewModel {
         return allComponents;
     }
 
-    @SuppressLint("CheckResult")
-    public void getComponentByName(String componentName) {
-        repository.getComponent(componentName)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(component -> componentMLD.setValue(component));
-    }
-
     public Component getComponent() {
         return component;
     }
