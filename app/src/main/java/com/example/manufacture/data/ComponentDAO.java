@@ -8,11 +8,8 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.manufacture.model.Component;
-import com.example.manufacture.model.Product;
 
 import java.util.List;
-
-import io.reactivex.Observable;
 
 @Dao
 public interface ComponentDAO {

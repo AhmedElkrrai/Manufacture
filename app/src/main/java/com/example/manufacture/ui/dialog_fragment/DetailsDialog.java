@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,17 +24,12 @@ import com.example.manufacture.ui.home.ProductViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class DetailsDialog extends DialogFragment {
     private ProductViewModel productViewModel;
     private ComponentsViewModel componentsViewModel;
-
-    private static final String TAG = "DetailsDialog";
 
     @Nullable
     @Override

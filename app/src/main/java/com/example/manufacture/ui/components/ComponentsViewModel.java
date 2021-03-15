@@ -1,6 +1,5 @@
 package com.example.manufacture.ui.components;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
@@ -13,22 +12,17 @@ import com.example.manufacture.model.ComponentRepository;
 
 import java.util.List;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-
 public class ComponentsViewModel extends AndroidViewModel {
 
     private final ComponentRepository repository;
     private final LiveData<List<Component>> allComponents;
 
     private Component component;
-    public MutableLiveData<Component> componentMLD;
 
     public ComponentsViewModel(@NonNull Application application) {
         super(application);
         repository = new ComponentRepository(application);
         allComponents = repository.getAllComponents();
-        componentMLD = new MutableLiveData<>();
     }
 
     public void insert(Component component) {
