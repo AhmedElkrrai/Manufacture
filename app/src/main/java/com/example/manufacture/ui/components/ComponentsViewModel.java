@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.manufacture.model.Component;
 import com.example.manufacture.model.ComponentRepository;
@@ -23,6 +22,10 @@ public class ComponentsViewModel extends AndroidViewModel {
         super(application);
         repository = new ComponentRepository(application);
         allComponents = repository.getAllComponents();
+    }
+
+    public boolean contains(String componentName) {
+        return repository.contains(componentName);
     }
 
     public int insert(Component component) {

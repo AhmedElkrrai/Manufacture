@@ -11,6 +11,8 @@ import com.example.manufacture.model.Component;
 
 import java.util.List;
 
+import io.reactivex.Single;
+
 @Dao
 public interface ComponentDAO {
     @Insert
@@ -27,4 +29,7 @@ public interface ComponentDAO {
 
     @Query("SELECT * FROM component_table where id = :componentId")
     LiveData<Component> getComponentById(int componentId);
+
+    @Query("SELECT EXISTS(SELECT * FROM component_table WHERE componentName = :componentName)")
+    Boolean contains(String componentName);
 }

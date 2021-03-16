@@ -37,13 +37,12 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="اسم المكون"
+                android:hint="@string/component_name"
                 android:inputType="textCapCharacters"
                 android:maxLength="32"
                 android:textAlignment="viewStart"
                 android:textColor="@color/primary"
-                android:textSize="14sp"
-                tools:ignore="HardcodedText" />
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

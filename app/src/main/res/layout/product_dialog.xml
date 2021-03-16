@@ -37,13 +37,12 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="اسم المنتج"
+                android:hint="@string/product_name"
                 android:inputType="textCapCharacters"
                 android:maxLength="32"
                 android:textAlignment="viewStart"
                 android:textColor="@color/primary"
-                android:textSize="14sp"
-                tools:ignore="HardcodedText" />
+                android:textSize="14sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -55,7 +54,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/_110sdp"
             android:layout_marginEnd="@dimen/_16sdp"
-            android:hint="اسم المكون"
+            android:hint="@string/component_name"
             app:boxCornerRadiusBottomEnd="@dimen/_12sdp"
             app:boxCornerRadiusBottomStart="@dimen/_12sdp"
             app:boxCornerRadiusTopEnd="@dimen/_12sdp"
@@ -68,8 +67,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="textCapCharacters"
                 android:textColor="@color/primary"
-                android:textSize="14sp"
-                tools:ignore="HardcodedText" />
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -80,7 +78,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/_110sdp"
             android:layout_marginEnd="@dimen/_236sdp"
-            android:hint="الكمية"
+            android:hint="@string/amount"
             app:boxCornerRadiusBottomEnd="@dimen/_12sdp"
             app:boxCornerRadiusBottomStart="@dimen/_12sdp"
             app:boxCornerRadiusTopEnd="@dimen/_12sdp"

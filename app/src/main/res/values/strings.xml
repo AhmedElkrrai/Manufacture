@@ -3,4 +3,7 @@
     <string name="title_home">Products</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Balance</string>
+    <string name="product_name">اسم المستحضر</string>
+    <string name="component_name">اسم الخامة</string>
+    <string name="amount">الكمية</string>
 </resources>

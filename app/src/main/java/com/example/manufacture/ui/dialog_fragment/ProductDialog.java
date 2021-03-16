@@ -21,6 +21,9 @@ import com.example.manufacture.model.Product;
 import com.example.manufacture.ui.components.ComponentsViewModel;
 import com.example.manufacture.ui.home.ProductViewModel;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -42,29 +45,48 @@ public class ProductDialog extends DialogFragment {
 
             binding.cancelBT.setOnClickListener(v -> Objects.requireNonNull(getDialog()).dismiss());
 
-            StringBuilder componentsList = new StringBuilder();
+            //----------------------------------------------------------
+
+            HashMap<String, Integer> componentMap = new HashMap<>();
+
+            componentsViewModel = ViewModelProviders.of(getActivity()).get(ComponentsViewModel.class);
+            List<Component> list = new ArrayList<>();
+            componentsViewModel.getAllComponents().observe(getActivity(), components -> {
+                list.addAll(components);
+                for (int i = 0; i < list.size(); i++)
+                    componentMap.put(list.get(i).getComponentName(), list.get(i).getId());
+            });
+
+            //----------------------------------------------------------
+
+            StringBuilder componentsStringBuilder = new StringBuilder();
 
             binding.addComponentProduct.setOnClickListener(v -> {
                 String componentName = binding.componentsEditText.getEditText().getText().toString();
                 String componentAmount = binding.componentAmountEditText.getEditText().getText().toString();
+                int id;
 
                 if (componentName.isEmpty() || componentAmount.isEmpty()) {
                     Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                Component cc = new Component(componentName, "provider", "0", "0");
-                int id = componentsViewModel.insert(cc);
-                componentsList.append(id).append(":").append(componentAmount).append(":");
-                Log.i("TAG", "sadbugs onCreateView: " + id);
+                if (!componentMap.containsKey(componentName)) {
+                    Component newComponent = new Component(componentName, "provider", "0", "0");
+                    id = componentsViewModel.insert(newComponent);
+                } else id = componentMap.get(componentName);
+
+                componentsStringBuilder.append(id).append(":").append(componentAmount).append(":");
 
                 binding.componentsEditText.getEditText().setText("");
                 binding.componentAmountEditText.getEditText().setText("");
             });
 
+            //----------------------------------------------------------
+
             binding.addProductBT.setOnClickListener(v -> {
                 String productName = binding.productNameEditText.getEditText().getText().toString();
-                String components = componentsList.toString();
+                String components = componentsStringBuilder.toString();
 
                 if (productName.isEmpty() || components.isEmpty()) {
                     Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
