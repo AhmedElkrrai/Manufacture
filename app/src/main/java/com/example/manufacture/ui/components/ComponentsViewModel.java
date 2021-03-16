@@ -24,10 +24,6 @@ public class ComponentsViewModel extends AndroidViewModel {
         allComponents = repository.getAllComponents();
     }
 
-    public boolean contains(String componentName) {
-        return repository.contains(componentName);
-    }
-
     public int insert(Component component) {
         return repository.insert(component);
     }

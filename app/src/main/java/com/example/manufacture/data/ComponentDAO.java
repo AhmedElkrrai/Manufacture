@@ -29,7 +29,4 @@ public interface ComponentDAO {
 
     @Query("SELECT * FROM component_table where id = :componentId")
     LiveData<Component> getComponentById(int componentId);
-
-    @Query("SELECT EXISTS(SELECT * FROM component_table WHERE componentName = :componentName)")
-    Boolean contains(String componentName);
 }

@@ -24,8 +24,8 @@ public class ProductViewModel extends AndroidViewModel {
         allProducts = repository.getAllProducts();
     }
 
-    public void insert(Product product) {
-        repository.insert(product);
+    public int insert(Product product) {
+        return repository.insert(product);
     }
 
     public void update(Product product) {
@@ -38,6 +38,10 @@ public class ProductViewModel extends AndroidViewModel {
 
     public LiveData<List<Product>> getAllProducts() {
         return allProducts;
+    }
+
+    public LiveData<Product> getProductById(int id) {
+        return repository.getProductById(id);
     }
 
     public Product getProduct() {

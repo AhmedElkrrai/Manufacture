@@ -10,7 +10,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#242424</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="duck_egg_blue">#d7fadf</color>
     <color name="weird_green">#51dc90</color>
+    <color name="greenish">#3aa068</color>
     <color name="dark_grey">#e4e6eb</color>
     <color name="orange_pink">#ff704f</color>
     <color name="slate_grey">#65676b</color>
@@ -22,4 +24,8 @@
     <color name="coral">#ff4b4b</color>
     <color name="steel">#878a90</color>
     <color name="azul">#1852f2</color>
+    <color name="azul_0.12">#1f1852f2</color>
+    <color name="sub_menue">#0055ff</color>
+    <color name="un_active_primary">#93aee6</color>
+    <color name="active_primary">#3892ff</color>
 </resources>

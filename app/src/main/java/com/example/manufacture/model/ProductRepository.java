@@ -1,6 +1,7 @@
 package com.example.manufacture.model;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
@@ -9,10 +10,15 @@ import com.example.manufacture.data.ProductDAO;
 
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class ProductRepository {
 
     private final ProductDAO productDAO;
     private final LiveData<List<Product>> allProducts;
+
+    public static final String SHARED_PREFS = "sharedPrefs";
+    private static SharedPreferences sharedPreferences;
 
     public ProductRepository(Application application) {
 
@@ -21,10 +27,16 @@ public class ProductRepository {
         productDAO = productDatabase.productDAO();
 
         allProducts = productDAO.getAllProducts();
+        sharedPreferences = application.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
     }
 
-    public void insert(Product product) {
+    public LiveData<Product> getProductById(int id) {
+        return productDAO.getProductById(id);
+    }
+
+    public int insert(Product product) {
         new InsertCustomerAsyncTask(productDAO).execute(product);
+        return sharedPreferences.getInt("productRowID", 1);
     }
 
     public void update(Product product) {
@@ -40,7 +52,7 @@ public class ProductRepository {
     }
 
     private static class InsertCustomerAsyncTask extends AsyncTask<Product, Void, Void> {
-        private ProductDAO productDAO;
+        private final ProductDAO productDAO;
 
         public InsertCustomerAsyncTask(ProductDAO productDAO) {
             this.productDAO = productDAO;
@@ -48,13 +60,17 @@ public class ProductRepository {
 
         @Override
         protected Void doInBackground(Product... products) {
-            productDAO.insert(products[0]);
+            long productRowID = productDAO.insert(products[0]);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt("productRowID", (int) productRowID + 1);
+            editor.apply();
             return null;
         }
     }
 
     private static class UpdateCustomerAsyncTask extends AsyncTask<Product, Void, Void> {
-        private ProductDAO productDAO;
+        private final ProductDAO productDAO;
 
         public UpdateCustomerAsyncTask(ProductDAO productDAO) {
             this.productDAO = productDAO;
@@ -68,7 +84,7 @@ public class ProductRepository {
     }
 
     private static class DeleteCustomerAsyncTask extends AsyncTask<Product, Void, Void> {
-        private ProductDAO productDAO;
+        private final ProductDAO productDAO;
 
         public DeleteCustomerAsyncTask(ProductDAO productDAO) {
             this.productDAO = productDAO;

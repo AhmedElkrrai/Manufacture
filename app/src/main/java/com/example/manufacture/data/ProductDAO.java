@@ -14,7 +14,7 @@ import java.util.List;
 @Dao
 public interface ProductDAO {
     @Insert
-    void insert(Product product);
+    long insert(Product product);
 
     @Update
     void update(Product product);
@@ -24,4 +24,7 @@ public interface ProductDAO {
 
     @Query("SELECT * FROM product_table")
     LiveData<List<Product>> getAllProducts();
+
+    @Query("SELECT * FROM product_table where id = :productId")
+    LiveData<Product> getProductById(int productId);
 }

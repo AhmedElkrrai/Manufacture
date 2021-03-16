@@ -113,8 +113,8 @@
                 android:layout_height="wrap_content"
                 android:hint="اسم المورد"
                 android:inputType="text"
-                android:textAlignment="viewStart"
                 android:maxLength="32"
+                android:textAlignment="viewStart"
                 android:textColor="@color/primary"
                 android:textSize="14sp"
                 tools:ignore="HardcodedText" />
@@ -170,6 +170,27 @@
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_24sdp"
             android:background="@drawable/edit_round_4" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/_246sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_94sdp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/subscriptions_RecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constrainedHeight="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/subscription_item" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </RelativeLayout>
 </layout>

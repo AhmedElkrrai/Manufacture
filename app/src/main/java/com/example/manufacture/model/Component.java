@@ -12,12 +12,14 @@ public class Component {
     private String providerName;
     private String availableAmount;
     private String minAmount;
+    private String subscribedProducts;
 
     public Component(String componentName, String providerName, String availableAmount, String minAmount) {
         this.componentName = componentName;
         this.providerName = providerName;
         this.availableAmount = availableAmount;
         this.minAmount = minAmount;
+        this.subscribedProducts = "";
     }
 
     public int getId() {
@@ -26,6 +28,14 @@ public class Component {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getSubscribedProducts() {
+        return subscribedProducts;
+    }
+
+    public void setSubscribedProducts(String subscribedProducts) {
+        this.subscribedProducts = subscribedProducts;
     }
 
     public String getProviderName() {

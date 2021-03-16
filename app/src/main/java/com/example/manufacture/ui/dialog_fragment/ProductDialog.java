@@ -48,13 +48,16 @@ public class ProductDialog extends DialogFragment {
             //----------------------------------------------------------
 
             HashMap<String, Integer> componentMap = new HashMap<>();
+            HashMap<Integer, Component> componentIdMap = new HashMap<>();
 
             componentsViewModel = ViewModelProviders.of(getActivity()).get(ComponentsViewModel.class);
             List<Component> list = new ArrayList<>();
             componentsViewModel.getAllComponents().observe(getActivity(), components -> {
                 list.addAll(components);
-                for (int i = 0; i < list.size(); i++)
+                for (int i = 0; i < list.size(); i++) {
                     componentMap.put(list.get(i).getComponentName(), list.get(i).getId());
+                    componentIdMap.put(list.get(i).getId(), list.get(i));
+                }
             });
 
             //----------------------------------------------------------
@@ -62,17 +65,20 @@ public class ProductDialog extends DialogFragment {
             StringBuilder componentsStringBuilder = new StringBuilder();
 
             binding.addComponentProduct.setOnClickListener(v -> {
+                String productName = binding.productNameEditText.getEditText().getText().toString();
+
                 String componentName = binding.componentsEditText.getEditText().getText().toString();
                 String componentAmount = binding.componentAmountEditText.getEditText().getText().toString();
                 int id;
 
-                if (componentName.isEmpty() || componentAmount.isEmpty()) {
+                if (componentName.isEmpty() || componentAmount.isEmpty() || productName.isEmpty()) {
                     Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (!componentMap.containsKey(componentName)) {
-                    Component newComponent = new Component(componentName, "provider", "0", "0");
+                    Component newComponent =
+                            new Component(componentName, "Provider", "0", "0");
                     id = componentsViewModel.insert(newComponent);
                 } else id = componentMap.get(componentName);
 
@@ -93,7 +99,17 @@ public class ProductDialog extends DialogFragment {
                     return;
                 }
 
-                productViewModel.insert(new Product(productName, components));
+                int productId = productViewModel.insert(new Product(productName, components));
+
+                String[] componentsId = components.split(":");
+
+                for (int i = 0; i < componentsId.length; i += 2) {
+                    int componentId = Integer.parseInt(componentsId[i]);
+                    Component newComponent = componentIdMap.get(componentId);
+
+                    newComponent.setSubscribedProducts(newComponent.getSubscribedProducts() + productId + ":");
+                    componentsViewModel.update(newComponent);
+                }
 
                 Toast.makeText(getActivity(), "Product Saved", Toast.LENGTH_SHORT).show();
                 Objects.requireNonNull(getDialog()).dismiss();

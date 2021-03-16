@@ -21,8 +21,6 @@ public class ComponentRepository {
     public static final String SHARED_PREFS = "sharedPrefs";
     private static SharedPreferences sharedPreferences;
 
-    private static boolean ass;
-
     public ComponentRepository(Application application) {
 
         ComponentDatabase componentDatabase = ComponentDatabase.getInstance(application);
@@ -32,31 +30,6 @@ public class ComponentRepository {
         allComponents = componentDAO.getAllComponents();
 
         sharedPreferences = application.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-    }
-
-    public Boolean contains(String componentName) {
-        new ContainsComponentAsyncTask(componentDAO).execute(componentName);
-        Log.i("TAG", "sadbugs contains: " + ass);
-        return ass;
-    }
-
-    private static class ContainsComponentAsyncTask extends AsyncTask<String, Boolean, Boolean> {
-        private final ComponentDAO componentDAO;
-
-        public ContainsComponentAsyncTask(ComponentDAO componentDAO) {
-            this.componentDAO = componentDAO;
-        }
-
-        @Override
-        protected Boolean doInBackground(String... strings) {
-            return componentDAO.contains(strings[0]);
-        }
-
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
-            ass = aBoolean;
-        }
     }
 
     public LiveData<Component> getComponentById(int id) {
@@ -94,7 +67,6 @@ public class ComponentRepository {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putInt("rowID", (int) rowID + 1);
             editor.apply();
-
             return null;
         }
 
