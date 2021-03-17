@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.manufacture.R;
@@ -30,7 +31,7 @@ public class ComponentsFragment extends Fragment {
 
         ComponentAdapter mAdapter = new ComponentAdapter();
 
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
 
         componentsViewModel.getAllComponents().observe(getActivity(), components -> mAdapter.setList(components));

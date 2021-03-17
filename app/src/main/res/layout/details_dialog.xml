@@ -19,7 +19,7 @@
             android:layout_centerInParent="true"
             android:fontFamily="@font/noto_sans_arabic_semi_bold"
             android:text="Product"
-            android:textColor="#000000"
+            android:textColor="@color/primary"
             android:textSize="24sp" />
 
         <LinearLayout
@@ -45,10 +45,6 @@
             <TextView
                 style="@style/DetailsDialogTextStyle"
                 android:text="Minimum" />
-
-            <TextView
-                style="@style/DetailsDialogTextStyle"
-                android:text="Provider" />
 
         </LinearLayout>
 

@@ -23,7 +23,7 @@
                     android:id="@+id/details_component_name"
                     android:layout_height="match_parent"
                     style="@style/DetailsDialogTextStyle"
-                    android:fontFamily="@font/noto_sans_arabic_ui_thin"
+                    android:textColor="@color/un_active_primary"
                     android:text="Name" />
 
                 <TextView
@@ -46,13 +46,6 @@
                     style="@style/DetailsDialogTextStyle"
                     android:textColor="@color/coral"
                     android:text="Minimum" />
-
-                <TextView
-                    android:fontFamily="@font/noto_sans_arabic_ui_thin"
-                    android:layout_height="match_parent"
-                    android:id="@+id/details_component_provider"
-                    style="@style/DetailsDialogTextStyle"
-                    android:text="Provider" />
 
             </LinearLayout>
 

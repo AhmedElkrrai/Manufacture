@@ -30,7 +30,6 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.DetailsH
         holder.amount.setText(mDetailsList.get(position).getProductAmount());
         holder.minAmount.setText(mDetailsList.get(position).getMinAmount());
         holder.availableAmount.setText(mDetailsList.get(position).getAvailableAmount());
-        holder.provider.setText(mDetailsList.get(position).getProviderName());
     }
 
     @Override
@@ -44,7 +43,7 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.DetailsH
     }
 
     public static class DetailsHolder extends RecyclerView.ViewHolder {
-        public TextView name, amount, minAmount, availableAmount, provider;
+        public TextView name, amount, minAmount, availableAmount;
 
         public DetailsHolder(@NonNull View itemView) {
             super(itemView);
@@ -52,7 +51,6 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.DetailsH
             amount = itemView.findViewById(R.id.details_component_amount);
             minAmount = itemView.findViewById(R.id.details_component_min_amount);
             availableAmount = itemView.findViewById(R.id.details_component_available_amount);
-            provider = itemView.findViewById(R.id.details_component_provider);
         }
     }
 }

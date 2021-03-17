@@ -70,7 +70,7 @@ public class DetailsDialog extends DialogFragment {
             componentsViewModel
                     .getComponentById(id)
                     .observe(getActivity(), component -> {
-                        details.add(new Details(component.getComponentName(), component.getProviderName(), component.getAvailableAmount(), component.getMinAmount(), amount));
+                        details.add(new Details(component.getComponentName(), component.getAvailableAmount(), component.getMinAmount(), amount));
                         mAdapter.notifyDataSetChanged();
                     });
         }
