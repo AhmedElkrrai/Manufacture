@@ -14,18 +14,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.manufacture.model.Product;
+import com.example.manufacture.model.Production;
 import com.example.manufacture.ui.adapter.ProductAdapter;
+import com.example.manufacture.ui.dashboard.ProductionViewModel;
 import com.example.manufacture.ui.dialog_fragment.DetailsDialog;
 import com.example.manufacture.ui.dialog_fragment.ProductDialog;
 import com.example.manufacture.R;
 import com.example.manufacture.databinding.FragmentHomeBinding;
 
+import java.time.LocalDate;
+
 public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        FragmentHomeBinding binding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_home, container, false);
+        FragmentHomeBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         View view = binding.getRoot();
 
         ProductViewModel productViewModel = new ViewModelProvider(getActivity()).get(ProductViewModel.class);
@@ -59,10 +61,23 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onProduceClicked(Product product) {
-                Toast.makeText(getActivity(), "onProduceClicked", Toast.LENGTH_SHORT).show();
+                //TODO show dialog fragment and get patch number
+                String patchNumber = "112434-4322434-244344";
+
+                ProductionViewModel productionViewModel = new ViewModelProvider(getActivity()).get(ProductionViewModel.class);
+
+                String date = getCurrentDate();
+
+                productionViewModel.insert(new Production(product.getId(), date, patchNumber, product.getProductName()));
+
+                Toast.makeText(getActivity(), "On Production", Toast.LENGTH_SHORT).show();
             }
         });
 
         return view;
+    }
+
+    private String getCurrentDate() {
+        return LocalDate.now().toString();
     }
 }

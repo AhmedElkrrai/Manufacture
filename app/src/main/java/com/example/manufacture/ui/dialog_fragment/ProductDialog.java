@@ -18,7 +18,9 @@ import com.example.manufacture.R;
 import com.example.manufacture.databinding.ProductDialogBinding;
 import com.example.manufacture.model.Component;
 import com.example.manufacture.model.Product;
+import com.example.manufacture.model.Production;
 import com.example.manufacture.ui.components.ComponentsViewModel;
+import com.example.manufacture.ui.dashboard.ProductionViewModel;
 import com.example.manufacture.ui.home.ProductViewModel;
 
 import java.util.ArrayList;
@@ -154,6 +156,13 @@ public class ProductDialog extends DialogFragment {
 
             //update product
 
+            List<Production> productions = new ArrayList<>();
+
+            ProductionViewModel productionViewModel =
+                    ViewModelProviders.of(getActivity()).get(ProductionViewModel.class);
+
+            productionViewModel.getProductionsByProductId(product.getId()).observe(getActivity(), productionsList -> productions.addAll(productionsList));
+
             binding.addComponent.setOnClickListener(v -> {
                 String componentName = binding.componentsEditText.getEditText().getText().toString();
                 String componentAmount = binding.componentAmountEditText.getEditText().getText().toString();
@@ -186,9 +195,14 @@ public class ProductDialog extends DialogFragment {
 
                 productViewModel.update(product);
 
+                for (Production production : productions) {
+                    production.setProductName(productName);
+                    productionViewModel.update(production);
+                    Log.i("TAG", "sadbugs: " + productions.size());
+                }
+
                 Toast.makeText(getActivity(), "Product Updated", Toast.LENGTH_SHORT).show();
                 Objects.requireNonNull(getDialog()).dismiss();
-
             });
 
             //delete product

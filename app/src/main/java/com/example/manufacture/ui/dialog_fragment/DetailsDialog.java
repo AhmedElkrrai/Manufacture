@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.manufacture.R;
 import com.example.manufacture.databinding.DetailsDialogBinding;
-import com.example.manufacture.model.Component;
+
 import com.example.manufacture.model.Details;
 import com.example.manufacture.model.Product;
 import com.example.manufacture.ui.adapter.DetailsAdapter;
@@ -25,8 +25,6 @@ import com.example.manufacture.ui.components.ComponentsViewModel;
 import com.example.manufacture.ui.home.ProductViewModel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
 
 public class DetailsDialog extends DialogFragment {

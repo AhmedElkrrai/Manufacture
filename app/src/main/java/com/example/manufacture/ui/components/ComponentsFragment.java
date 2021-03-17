@@ -20,8 +20,7 @@ import com.example.manufacture.ui.dialog_fragment.ComponentDialog;
 public class ComponentsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FragmentComponentsBinding binding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_components, container, false);
+        FragmentComponentsBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_components, container, false);
         View view = binding.getRoot();
 
         ComponentsViewModel componentsViewModel = new ViewModelProvider(getActivity()).get(ComponentsViewModel.class);
