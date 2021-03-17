@@ -22,6 +22,8 @@
     <color name="blue">#4080ff</color>
     <color name="charcoal_grey">#3c4151</color>
     <color name="coral">#ff4b4b</color>
+    <color name="red500">#FF8A80</color>
+    <color name="red700">#D50000</color>
     <color name="steel">#878a90</color>
     <color name="azul">#1852f2</color>
     <color name="azul_0.12">#1f1852f2</color>

@@ -19,6 +19,7 @@ public class ProductionViewModel extends AndroidViewModel {
     private final LiveData<List<Production>> allProductions;
 
     private Product product;
+    private String patchNumber;
 
     public ProductionViewModel(@NonNull Application application) {
         super(application);
@@ -56,5 +57,13 @@ public class ProductionViewModel extends AndroidViewModel {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public String getPatchNumber() {
+        return patchNumber;
+    }
+
+    public void setPatchNumber(String patchNumber) {
+        this.patchNumber = patchNumber;
     }
 }

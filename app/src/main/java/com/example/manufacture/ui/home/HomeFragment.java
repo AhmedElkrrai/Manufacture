@@ -21,6 +21,7 @@ import com.example.manufacture.ui.dialog_fragment.DetailsDialog;
 import com.example.manufacture.ui.dialog_fragment.ProductDialog;
 import com.example.manufacture.R;
 import com.example.manufacture.databinding.FragmentHomeBinding;
+import com.example.manufacture.ui.dialog_fragment.ProductionDialog;
 
 import java.time.LocalDate;
 
@@ -61,23 +62,14 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onProduceClicked(Product product) {
-                //TODO show dialog fragment and get patch number
-                String patchNumber = "112434-4322434-244344";
-
                 ProductionViewModel productionViewModel = new ViewModelProvider(getActivity()).get(ProductionViewModel.class);
+                productionViewModel.setProduct(product);
 
-                String date = getCurrentDate();
-
-                productionViewModel.insert(new Production(product.getId(), date, patchNumber, product.getProductName()));
-
-                Toast.makeText(getActivity(), "On Production", Toast.LENGTH_SHORT).show();
+                new ProductionDialog().show(getFragmentManager(), "Production_Dialog");
             }
         });
 
         return view;
     }
 
-    private String getCurrentDate() {
-        return LocalDate.now().toString();
-    }
 }
