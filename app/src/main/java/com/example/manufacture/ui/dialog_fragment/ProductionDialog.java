@@ -73,14 +73,21 @@ public class ProductionDialog extends DialogFragment {
                 int availableAmount = Integer.parseInt(component.getAvailableAmount());
 
                 if (availableAmount == 0) {
-                    String warningMessage = "Material(s) are Out Of Stock \n \t \tProduction Canceled";
+                    String warningMessage = "Material(s) are Out Of Stock \n \t \tProduction Canceled.";
+                    Toast.makeText(getActivity(), warningMessage, Toast.LENGTH_LONG).show();
+                    getDialog().dismiss();
+                    return;
+                }
+
+                if (availableAmount / amount < 1) {
+                    String warningMessage = "Material(s) Required. \nProduction Canceled.";
                     Toast.makeText(getActivity(), warningMessage, Toast.LENGTH_LONG).show();
                     getDialog().dismiss();
                     return;
                 }
 
                 if (availableAmount / amount <= 2) {
-                    String warningMessage = " WARNING : Material(s) are On Low Stock. \n \t \t IMPORT \" " + component.getComponentName()+" \"";
+                    String warningMessage = " WARNING : Material(s) are On Low Stock. \n \t \t IMPORT \" " + component.getComponentName() + " \"";
                     Toast.makeText(getActivity(), warningMessage, Toast.LENGTH_LONG).show();
                 }
             }
