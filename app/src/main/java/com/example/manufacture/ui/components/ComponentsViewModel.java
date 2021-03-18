@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.manufacture.model.Component;
-import com.example.manufacture.model.ComponentRepository;
+import com.example.manufacture.repository.ComponentRepository;
 
 import java.util.List;
 

@@ -1,7 +1,6 @@
 package com.example.manufacture.ui.dialog_fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,9 +56,6 @@ public class DetailsDialog extends DialogFragment {
         String componentsStr = product.getComponents();
         String[] componentsArray = componentsStr.split(":");
 
-
-        binding.setLifecycleOwner(this);
-
         mAdapter.setList(details);
 
         for (int i = 0; i < componentsArray.length; i += 2) {
@@ -70,7 +65,7 @@ public class DetailsDialog extends DialogFragment {
             componentsViewModel
                     .getComponentById(id)
                     .observe(getActivity(), component -> {
-                        details.add(new Details(component.getComponentName(), component.getAvailableAmount(), component.getMinAmount(), amount));
+                        details.add(new Details(component.getComponentName(), component.getAvailableAmount() ,amount));
                         mAdapter.notifyDataSetChanged();
                     });
         }

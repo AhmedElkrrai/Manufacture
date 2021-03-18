@@ -25,7 +25,6 @@ public class ComponentsFragment extends Fragment {
         View view = binding.getRoot();
 
         ComponentsViewModel componentsViewModel = new ViewModelProvider(getActivity()).get(ComponentsViewModel.class);
-        binding.setLifecycleOwner(this);
 
         RecyclerView mRecyclerView = binding.componentRecyclerView;
 
@@ -40,6 +39,8 @@ public class ComponentsFragment extends Fragment {
             componentsViewModel.setComponent(component);
             new ComponentDialog().show(getFragmentManager(), "Update_Component");
         });
+
+        //TODO: on long press open a dialog to delete component
 
         return view;
     }

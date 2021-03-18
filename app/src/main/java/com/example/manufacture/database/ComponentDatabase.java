@@ -1,4 +1,4 @@
-package com.example.manufacture.model;
+package com.example.manufacture.database;
 
 import android.content.Context;
 
@@ -7,6 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.manufacture.data.ComponentDAO;
+import com.example.manufacture.model.Component;
 
 @Database(entities = Component.class, version = 1)
 public abstract class ComponentDatabase extends RoomDatabase {

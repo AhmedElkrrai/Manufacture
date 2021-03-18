@@ -1,17 +1,15 @@
-package com.example.manufacture.model;
+package com.example.manufacture.database;
 
 import android.content.Context;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverters;
 
-import com.example.manufacture.data.Converters;
 import com.example.manufacture.data.ProductionDAO;
+import com.example.manufacture.model.Production;
 
 @Database(entities = Production.class, version = 1)
-@TypeConverters(Converters.class)
 public abstract class ProductionDatabase extends RoomDatabase {
 
     private static ProductionDatabase instance;

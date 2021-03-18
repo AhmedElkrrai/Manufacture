@@ -9,13 +9,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.manufacture.R;
 import com.example.manufacture.databinding.FragmentDashboardBinding;
+import com.example.manufacture.model.Product;
 import com.example.manufacture.ui.adapter.ProductionAdapter;
+import com.example.manufacture.ui.dialog_fragment.ProductDialog;
+import com.example.manufacture.ui.dialog_fragment.ViewProductionDialog;
+import com.example.manufacture.ui.home.ProductViewModel;
 
 public class DashboardFragment extends Fragment {
 
@@ -28,8 +33,6 @@ public class DashboardFragment extends Fragment {
 
         ProductionViewModel productionViewModel = new ViewModelProvider(getActivity()).get(ProductionViewModel.class);
 
-        binding.setLifecycleOwner(this);
-
         RecyclerView mRecyclerView = binding.dashBoardRecyclerView;
 
         ProductionAdapter mAdapter = new ProductionAdapter();
@@ -40,7 +43,8 @@ public class DashboardFragment extends Fragment {
         productionViewModel.getAllProductions().observe(getActivity(), productions -> mAdapter.setList(productions));
 
         mAdapter.setOnItemClickListener(production -> {
-            Toast.makeText(getActivity(), production.getProductName() + " " + production.getProductID(), Toast.LENGTH_SHORT).show();
+            productionViewModel.setProduction(production);
+            new ViewProductionDialog().show(getFragmentManager(), "View_Production_Dialog");
         });
 
         return view;

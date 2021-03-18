@@ -4,13 +4,11 @@ public class Details {
 
     private final String componentName;
     private final String availableAmount;
-    private final String minAmount;
     private final String productAmount;
 
-    public Details(String componentName, String availableAmount, String minAmount, String productAmount) {
+    public Details(String componentName, String availableAmount, String productAmount) {
         this.componentName = componentName;
         this.availableAmount = availableAmount;
-        this.minAmount = minAmount;
         this.productAmount = productAmount;
     }
 
@@ -20,10 +18,6 @@ public class Details {
 
     public String getAvailableAmount() {
         return availableAmount;
-    }
-
-    public String getMinAmount() {
-        return minAmount;
     }
 
     public String getProductAmount() {

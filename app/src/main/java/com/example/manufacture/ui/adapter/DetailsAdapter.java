@@ -28,7 +28,6 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.DetailsH
     public void onBindViewHolder(@NonNull DetailsHolder holder, int position) {
         holder.name.setText(mDetailsList.get(position).getComponentName());
         holder.amount.setText(mDetailsList.get(position).getProductAmount());
-        holder.minAmount.setText(mDetailsList.get(position).getMinAmount());
         holder.availableAmount.setText(mDetailsList.get(position).getAvailableAmount());
     }
 
@@ -43,13 +42,12 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.DetailsH
     }
 
     public static class DetailsHolder extends RecyclerView.ViewHolder {
-        public TextView name, amount, minAmount, availableAmount;
+        public TextView name, amount, availableAmount;
 
         public DetailsHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.details_component_name);
             amount = itemView.findViewById(R.id.details_component_amount);
-            minAmount = itemView.findViewById(R.id.details_component_min_amount);
             availableAmount = itemView.findViewById(R.id.details_component_available_amount);
         }
     }

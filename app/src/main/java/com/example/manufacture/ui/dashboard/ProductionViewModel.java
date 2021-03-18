@@ -7,9 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.manufacture.model.Product;
-import com.example.manufacture.model.ProductRepository;
 import com.example.manufacture.model.Production;
-import com.example.manufacture.model.ProductionRepository;
+import com.example.manufacture.repository.ProductionRepository;
 
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class ProductionViewModel extends AndroidViewModel {
     private final LiveData<List<Production>> allProductions;
 
     private Product product;
-    private String patchNumber;
+    private Production production;
 
     public ProductionViewModel(@NonNull Application application) {
         super(application);
@@ -59,11 +58,11 @@ public class ProductionViewModel extends AndroidViewModel {
         this.product = product;
     }
 
-    public String getPatchNumber() {
-        return patchNumber;
+    public Production getProduction() {
+        return production;
     }
 
-    public void setPatchNumber(String patchNumber) {
-        this.patchNumber = patchNumber;
+    public void setProduction(Production production) {
+        this.production = production;
     }
 }

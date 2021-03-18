@@ -10,16 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.manufacture.R;
 import com.example.manufacture.databinding.ComponentDialogBinding;
 import com.example.manufacture.model.Component;
-import com.example.manufacture.model.Product;
 import com.example.manufacture.ui.adapter.SubscriptionAdapter;
 import com.example.manufacture.ui.components.ComponentsViewModel;
 import com.example.manufacture.ui.home.ProductViewModel;
@@ -47,9 +44,7 @@ public class ComponentDialog extends DialogFragment {
         binding.componentNameEditText.getEditText().setText(component.getComponentName());
         binding.componentProviderNameEditText.getEditText().setText(component.getProviderName());
         binding.componentAvailableAmountEditText.getEditText().setText(String.valueOf(component.getAvailableAmount()));
-        binding.componentMinAmountEditText.getEditText().setText(String.valueOf(component.getMinAmount()));
-
-//        binding.componentMinAmountEditText.getEditText().setEnabled(false);
+        binding.componentMinAmountEditText.getEditText().setText("-");
 
         //display subscriptions
         RecyclerView mRecyclerView = binding.subscriptionsRecyclerView;
@@ -79,12 +74,10 @@ public class ComponentDialog extends DialogFragment {
         binding.updateComponentBT.setOnClickListener(v -> {
             String componentName = binding.componentNameEditText.getEditText().getText().toString();
             String availableAmount = binding.componentAvailableAmountEditText.getEditText().getText().toString();
-            String minAmount = binding.componentMinAmountEditText.getEditText().getText().toString();
             String providerName = binding.componentProviderNameEditText.getEditText().getText().toString();
 
             component.setComponentName(componentName);
             component.setAvailableAmount(availableAmount);
-            component.setMinAmount(minAmount);
             component.setProviderName(providerName);
 
             componentsViewModel.update(component);
@@ -93,12 +86,8 @@ public class ComponentDialog extends DialogFragment {
             getDialog().dismiss();
         });
 
-        //delete component
-        binding.deleteComponentBT.setOnClickListener(v -> {
-            componentsViewModel.delete(component);
-            Toast.makeText(getActivity(), "Component Deleted", Toast.LENGTH_SHORT).show();
-            getDialog().dismiss();
-        });
+        //cancel component
+        binding.cancelComponentBT.setOnClickListener(v -> getDialog().dismiss());
 
         return view;
     }

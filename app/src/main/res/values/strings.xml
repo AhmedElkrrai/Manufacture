@@ -6,7 +6,7 @@
     <string name="product_name">اسم المستحضر</string>
     <string name="component_name">اسم الخامة</string>
     <string name="amount">الكمية</string>
-    <string name="patch_number">Patch Number</string>
+    <string name="batch_number">Batch Number</string>
     <string name="save">حفظ</string>
     <string name="cancel">الغاء</string>
     <string name="warning_message">Warning : You Will Not Be Able To Edit Patch Number, Materials Will Be Consumed.</string>

@@ -36,7 +36,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/patch_number"
+                android:hint="@string/batch_number"
                 android:inputType="phone"
                 android:maxLength="32"
                 android:textAlignment="viewStart"

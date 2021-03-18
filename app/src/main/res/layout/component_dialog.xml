@@ -152,7 +152,7 @@
             android:background="@drawable/edit_round_3" />
 
         <Button
-            android:id="@+id/delete_component_BT"
+            android:id="@+id/cancel_component_BT"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="@dimen/_124sdp"
             android:layout_height="@dimen/_48sdp"
@@ -160,7 +160,7 @@
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_24sdp"
             android:background="@drawable/edit_round_2"
-            android:text="مسح"
+            android:text="الغاء"
             android:textColor="@color/coral"
             app:backgroundTint="@color/white" />
 

@@ -1,4 +1,4 @@
-package com.example.manufacture.model;
+package com.example.manufacture.repository;
 
 import android.app.Application;
 import android.content.SharedPreferences;
@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 
 import com.example.manufacture.data.ProductionDAO;
+import com.example.manufacture.model.Production;
+import com.example.manufacture.database.ProductionDatabase;
 
 import java.util.List;
 

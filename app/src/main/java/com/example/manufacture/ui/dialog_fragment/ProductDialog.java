@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.manufacture.R;
@@ -81,7 +80,7 @@ public class ProductDialog extends DialogFragment {
 
                 if (!componentMap.containsKey(componentName)) {
                     Component newComponent =
-                            new Component(componentName, "Provider", "0", "0");
+                            new Component(componentName, "Provider", "0");
                     id = componentsViewModel.insert(newComponent);
                 } else id = componentMap.get(componentName);
 
@@ -201,7 +200,6 @@ public class ProductDialog extends DialogFragment {
                 for (Production production : productions) {
                     production.setProductName(productName);
                     productionViewModel.update(production);
-                    Log.i("TAG", "sadbugs: " + productions.size());
                 }
 
                 Toast.makeText(getActivity(), "Product Updated", Toast.LENGTH_SHORT).show();

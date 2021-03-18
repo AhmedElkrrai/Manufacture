@@ -32,7 +32,7 @@ public class HomeFragment extends Fragment {
         View view = binding.getRoot();
 
         ProductViewModel productViewModel = new ViewModelProvider(getActivity()).get(ProductViewModel.class);
-        binding.setLifecycleOwner(this);
+
         binding.addProductButton.setOnClickListener(v -> {
             assert getFragmentManager() != null;
             new ProductDialog().show(getFragmentManager(), "Add_Product_Dialog");

@@ -62,7 +62,7 @@ public class ProductionDialog extends DialogFragment {
             String patchNumber = binding.patchNumberET.getEditText().getText().toString();
 
             if (patchNumber.isEmpty()) {
-                Toast.makeText(getActivity(), "Please Enter Patch Number First " + patchNumber, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Please Enter Batch Number First " + patchNumber, Toast.LENGTH_SHORT).show();
                 return;
             }
 

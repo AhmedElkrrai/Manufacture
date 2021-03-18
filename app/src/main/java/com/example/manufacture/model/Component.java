@@ -11,14 +11,12 @@ public class Component {
     private String componentName;
     private String providerName;
     private String availableAmount;
-    private String minAmount;
     private String subscribedProducts;
 
-    public Component(String componentName, String providerName, String availableAmount, String minAmount) {
+    public Component(String componentName, String providerName, String availableAmount) {
         this.componentName = componentName;
         this.providerName = providerName;
         this.availableAmount = availableAmount;
-        this.minAmount = minAmount;
         this.subscribedProducts = "";
     }
 
@@ -60,13 +58,5 @@ public class Component {
 
     public void setAvailableAmount(String availableAmount) {
         this.availableAmount = availableAmount;
-    }
-
-    public String getMinAmount() {
-        return minAmount;
-    }
-
-    public void setMinAmount(String minAmount) {
-        this.minAmount = minAmount;
     }
 }
