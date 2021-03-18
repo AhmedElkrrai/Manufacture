@@ -28,7 +28,8 @@ public class ComponentAdapter extends RecyclerView.Adapter<ComponentAdapter.Comp
     public void onBindViewHolder(@NonNull ComponentHolder holder, int position) {
         holder.component_name.setText(components.get(position).getComponentName());
         holder.available_amount.setText(components.get(position).getAvailableAmount());
-        holder.min_amount.setText(components.get(position).getMinAmount());
+        if (!(components.get(position).getProviderName().equals("Provider")))
+            holder.provider_name.setText(components.get(position).getProviderName());
     }
 
     @Override
@@ -42,13 +43,13 @@ public class ComponentAdapter extends RecyclerView.Adapter<ComponentAdapter.Comp
     }
 
     public static class ComponentHolder extends RecyclerView.ViewHolder {
-        public TextView component_name, available_amount, min_amount , providerName;
+        public TextView component_name, available_amount, provider_name;
 
         public ComponentHolder(@NonNull View itemView) {
             super(itemView);
             component_name = itemView.findViewById(R.id.component_name_item);
             available_amount = itemView.findViewById(R.id.component_available_amount_item);
-            min_amount = itemView.findViewById(R.id.component_min_amount_item);
+            provider_name = itemView.findViewById(R.id.provider_name_item);
 
             itemView.setOnClickListener(v -> {
                 if (listener != null) {
