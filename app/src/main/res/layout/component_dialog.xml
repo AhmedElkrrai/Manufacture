@@ -72,13 +72,13 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/component_min_amount_edit_text"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/soso"
             android:layout_width="@dimen/_140sdp"
             android:layout_height="@dimen/_58sdp"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/_110sdp"
             android:layout_marginEnd="@dimen/_176sdp"
-            android:hint="أقل كمية"
+            android:hint="التشغيلات المتاحة"
             app:boxCornerRadiusBottomEnd="@dimen/_12sdp"
             app:boxCornerRadiusBottomStart="@dimen/_12sdp"
             app:boxCornerRadiusTopEnd="@dimen/_12sdp"
@@ -87,10 +87,11 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="top"
+                android:gravity="center"
+                android:enabled="false"
                 android:imeOptions="actionDone"
                 android:inputType="phone"
-                android:textColor="@color/primary"
+                android:textColor="@color/un_active_primary"
                 android:textSize="14sp"
                 tools:ignore="HardcodedText" />
         </com.google.android.material.textfield.TextInputLayout>

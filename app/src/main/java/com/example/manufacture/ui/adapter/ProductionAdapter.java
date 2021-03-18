@@ -10,13 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.manufacture.R;
+import com.example.manufacture.model.Product;
 import com.example.manufacture.model.Production;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductionAdapter extends RecyclerView.Adapter<ProductionAdapter.ProductionHolder> {
-    private List<Production> mProductionList = new ArrayList<>();
+    private static List<Production> mProductionList = new ArrayList<>();
+    private static OnItemClickListener listener;
 
     @NonNull
     @Override
@@ -37,7 +39,7 @@ public class ProductionAdapter extends RecyclerView.Adapter<ProductionAdapter.Pr
     }
 
     public void setList(List<Production> productions) {
-        this.mProductionList = productions;
+        mProductionList = productions;
         notifyDataSetChanged();
     }
 
@@ -49,6 +51,22 @@ public class ProductionAdapter extends RecyclerView.Adapter<ProductionAdapter.Pr
             patchNumber = itemView.findViewById(R.id.production_item_patch_number);
             productName = itemView.findViewById(R.id.production_item_product_name);
             productionDate = itemView.findViewById(R.id.production_item_production_date);
+
+            itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION)
+                        listener.onItemClicked(mProductionList.get(position));
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClicked(Production production);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        ProductionAdapter.listener = listener;
     }
 }

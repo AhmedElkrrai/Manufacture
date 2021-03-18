@@ -49,6 +49,8 @@ public class ComponentDialog extends DialogFragment {
         binding.componentAvailableAmountEditText.getEditText().setText(String.valueOf(component.getAvailableAmount()));
         binding.componentMinAmountEditText.getEditText().setText(String.valueOf(component.getMinAmount()));
 
+//        binding.componentMinAmountEditText.getEditText().setEnabled(false);
+
         //display subscriptions
         RecyclerView mRecyclerView = binding.subscriptionsRecyclerView;
 

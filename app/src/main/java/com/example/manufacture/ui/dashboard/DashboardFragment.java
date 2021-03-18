@@ -4,29 +4,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.manufacture.R;
 import com.example.manufacture.databinding.FragmentDashboardBinding;
-import com.example.manufacture.model.Product;
-import com.example.manufacture.model.Production;
 import com.example.manufacture.ui.adapter.ProductionAdapter;
-import com.example.manufacture.ui.components.ComponentsViewModel;
-import com.example.manufacture.ui.home.HomeFragment;
-import com.example.manufacture.ui.home.ProductViewModel;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class DashboardFragment extends Fragment {
 
@@ -49,6 +38,10 @@ public class DashboardFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         productionViewModel.getAllProductions().observe(getActivity(), productions -> mAdapter.setList(productions));
+
+        mAdapter.setOnItemClickListener(production -> {
+            Toast.makeText(getActivity(), production.getProductName() + " " + production.getProductID(), Toast.LENGTH_SHORT).show();
+        });
 
         return view;
     }

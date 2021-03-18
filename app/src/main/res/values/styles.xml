@@ -11,4 +11,9 @@
         <item name="android:fontFamily">@font/noto_sans_arabic_medium</item>
     </style>
 
+    <style name="soso" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">#4080ff</item>
+        <item name="android:textColorHint">@color/primary</item>
+        <item name="boxStrokeWidth">@dimen/_2sdp</item>
+    </style>
 </resources>

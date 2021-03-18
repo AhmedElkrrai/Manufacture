@@ -1,5 +1,6 @@
 package com.example.manufacture.ui.dialog_fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -121,7 +122,9 @@ public class ProductDialog extends DialogFragment {
 
         if (getTag().equals("Update_Product_Dialog")) {
             binding.addComponentProduct.setVisibility(View.GONE);
-            binding.componentsEditText.getEditText().setEnabled(false);
+            binding.componentsEditText.setEnabled(false);
+            binding.componentsEditText.getEditText().setTextColor(Color.parseColor("#93aee6"));
+
 
             //get Product
             productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);

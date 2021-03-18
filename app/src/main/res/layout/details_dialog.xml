@@ -44,7 +44,7 @@
 
             <TextView
                 style="@style/DetailsDialogTextStyle"
-                android:text="Minimum" />
+                android:text="Patches" />
 
         </LinearLayout>
 
