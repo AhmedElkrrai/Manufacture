@@ -106,7 +106,7 @@ public class ComponentDialog extends DialogFragment {
         super.onResume();
         Objects.requireNonNull(getDialog()).getWindow().setBackgroundDrawableResource(R.drawable.edit_round_2);
         int width = getResources().getDimensionPixelSize(R.dimen._329sdp);
-        int height = getResources().getDimensionPixelSize(R.dimen._555sdp);
+        int height = getResources().getDimensionPixelSize(R.dimen._455sdp);
         getDialog().getWindow().setLayout(width, height);
     }
 
