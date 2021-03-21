@@ -1,7 +1,6 @@
 package com.example.manufacture.ui.dialog_fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.manufacture.R;
@@ -21,12 +19,9 @@ import com.example.manufacture.model.Product;
 import com.example.manufacture.model.Production;
 import com.example.manufacture.ui.components.ComponentsViewModel;
 import com.example.manufacture.ui.dashboard.ProductionViewModel;
-import com.example.manufacture.ui.home.ProductViewModel;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 
@@ -120,7 +115,7 @@ public class ProductionDialog extends DialogFragment {
         super.onResume();
         Objects.requireNonNull(getDialog()).getWindow().setBackgroundDrawableResource(R.drawable.edit_round_2);
         int width = getResources().getDimensionPixelSize(R.dimen._329sdp);
-        int height = getResources().getDimensionPixelSize(R.dimen._305sdp);
+        int height = getResources().getDimensionPixelSize(R.dimen._505sdp);
         getDialog().getWindow().setLayout(width, height);
     }
 

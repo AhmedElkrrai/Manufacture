@@ -11,12 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.manufacture.R;
 import com.example.manufacture.model.Details;
+import com.example.manufacture.model.Production;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.DetailsHolder> {
-    private List<Details> mDetailsList = new ArrayList<>();
+    private static List<Details> mDetailsList = new ArrayList<>();
 
     @NonNull
     @Override
@@ -37,7 +38,7 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.DetailsH
     }
 
     public void setList(List<Details> detailsList) {
-        this.mDetailsList = detailsList;
+        mDetailsList = detailsList;
         notifyDataSetChanged();
     }
 

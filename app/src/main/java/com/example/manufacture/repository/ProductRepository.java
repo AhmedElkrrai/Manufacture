@@ -36,6 +36,10 @@ public class ProductRepository {
         return productDAO.getProductById(id);
     }
 
+    public LiveData<Product> getProductByName(String productName) {
+        return productDAO.getProductByName(productName);
+    }
+
     public int insert(Product product) {
         new InsertCustomerAsyncTask(productDAO).execute(product);
         return sharedPreferences.getInt("productRowID", 1);

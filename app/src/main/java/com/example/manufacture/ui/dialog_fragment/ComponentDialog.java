@@ -21,6 +21,7 @@ import com.example.manufacture.ui.adapter.SubscriptionAdapter;
 import com.example.manufacture.ui.components.ComponentsViewModel;
 import com.example.manufacture.ui.home.ProductViewModel;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -44,7 +45,7 @@ public class ComponentDialog extends DialogFragment {
         binding.componentNameEditText.getEditText().setText(component.getComponentName());
         binding.componentProviderNameEditText.getEditText().setText(component.getProviderName());
         binding.componentAvailableAmountEditText.getEditText().setText(String.valueOf(component.getAvailableAmount()));
-        binding.componentMinAmountEditText.getEditText().setText("-");
+        binding.componentBatchesText.getEditText().setText("-");
 
         //display subscriptions
         RecyclerView mRecyclerView = binding.subscriptionsRecyclerView;
@@ -67,8 +68,29 @@ public class ComponentDialog extends DialogFragment {
                     });
         }
 
-        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnSubscriptionClicked(productName -> {
+            productViewModel.getProductByName(productName).observe(getActivity(), product -> {
+                String[] componentsAmounts = product.getComponents().split(":");
+                int componentId = component.getId();
+                int availableAmount = Integer.parseInt(component.getAvailableAmount());
+                int amount = 0;
 
+                for (int i = 0; i < componentsAmounts.length; i += 2) {
+                    if (Integer.parseInt(componentsAmounts[i]) == componentId) {
+                        amount = Integer.parseInt(componentsAmounts[i + 1]);
+                        break;
+                    }
+                }
+
+                double batchesAmount = availableAmount * 1.0 / amount * 1.0;
+                DecimalFormat twoDForm = new DecimalFormat("#.#");
+                batchesAmount = Double.parseDouble(twoDForm.format(batchesAmount));
+
+                binding.componentBatchesText.getEditText().setText(String.format("%s", batchesAmount));
+            });
+        });
+
+        mRecyclerView.setAdapter(mAdapter);
 
         //update component
         binding.updateComponentBT.setOnClickListener(v -> {

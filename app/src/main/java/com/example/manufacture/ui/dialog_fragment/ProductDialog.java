@@ -206,14 +206,9 @@ public class ProductDialog extends DialogFragment {
                 Objects.requireNonNull(getDialog()).dismiss();
             });
 
-            //delete product
-            binding.cancelBT.setText("مسح");
+            //cancel product
 
-            binding.cancelBT.setOnClickListener(view1 -> {
-                productViewModel.delete(product);
-                Toast.makeText(getActivity(), "Product Deleted", Toast.LENGTH_SHORT).show();
-                getDialog().dismiss();
-            });
+            binding.cancelBT.setOnClickListener(v -> getDialog().dismiss());
 
         }
 

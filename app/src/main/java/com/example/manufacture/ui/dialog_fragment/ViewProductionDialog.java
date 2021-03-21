@@ -1,7 +1,6 @@
 package com.example.manufacture.ui.dialog_fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,19 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.manufacture.R;
 import com.example.manufacture.databinding.ViewProductionDialogBinding;
-import com.example.manufacture.model.Component;
 import com.example.manufacture.model.ComponentBatch;
-import com.example.manufacture.model.Product;
 import com.example.manufacture.model.Production;
 import com.example.manufacture.ui.adapter.BatchAdapter;
-import com.example.manufacture.ui.adapter.DetailsAdapter;
 import com.example.manufacture.ui.components.ComponentsViewModel;
 import com.example.manufacture.ui.dashboard.ProductionViewModel;
 import com.example.manufacture.ui.home.ProductViewModel;

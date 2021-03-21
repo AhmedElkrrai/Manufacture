@@ -15,7 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapter.SubscriptionHolder> {
-    private List<String> mSubscriptionList = new ArrayList<>();
+    private static List<String> mSubscriptionList = new ArrayList<>();
+    private static OnItemClickListener listener;
 
     @NonNull
     @Override
@@ -34,16 +35,32 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
     }
 
     public void setList(List<String> subscriptions) {
-        this.mSubscriptionList = subscriptions;
+        mSubscriptionList = subscriptions;
         notifyDataSetChanged();
     }
 
     public static class SubscriptionHolder extends RecyclerView.ViewHolder {
-        public Button subscription;
+        public TextView subscription;
 
         public SubscriptionHolder(@NonNull View itemView) {
             super(itemView);
             subscription = itemView.findViewById(R.id.subscribed_product_TV);
+
+            subscription.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION)
+                        listener.onSubscriptionClicked(mSubscriptionList.get(position));
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onSubscriptionClicked(String productName);
+    }
+
+    public void setOnSubscriptionClicked(OnItemClickListener listener) {
+        SubscriptionAdapter.listener = listener;
     }
 }
