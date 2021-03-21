@@ -35,7 +35,12 @@ public class ComponentsFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
 
-        componentsViewModel.getAllComponents().observe(getActivity(), components -> mAdapter.setList(components));
+        componentsViewModel.getAllComponents().observe(getActivity(), components -> {
+            if (components.isEmpty())
+                binding.emptyComponents.setVisibility(View.VISIBLE);
+            else binding.emptyComponents.setVisibility(View.GONE);
+            mAdapter.setList(components);
+        });
 
         mAdapter.setOnItemClickListener(component -> {
             componentsViewModel.setComponent(component);

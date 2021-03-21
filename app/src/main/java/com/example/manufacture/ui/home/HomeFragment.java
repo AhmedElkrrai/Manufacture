@@ -42,7 +42,12 @@ public class HomeFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
 
-        productViewModel.getAllProducts().observe(getActivity(), products -> mAdapter.setList(products));
+        productViewModel.getAllProducts().observe(getActivity(), products -> {
+            if (products.isEmpty())
+                binding.emptyProducts.setVisibility(View.VISIBLE);
+            else binding.emptyProducts.setVisibility(View.GONE);
+            mAdapter.setList(products);
+        });
 
         mAdapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
             @Override

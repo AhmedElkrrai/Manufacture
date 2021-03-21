@@ -42,7 +42,13 @@ public class DashboardFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
 
-        productionViewModel.getAllProductions().observe(getActivity(), productions -> mAdapter.setList(productions));
+        productionViewModel.getAllProductions().observe(getActivity(), productions -> {
+            if (productions.isEmpty()) {
+                binding.emptyDashboard.setVisibility(View.VISIBLE);
+            } else binding.emptyDashboard.setVisibility(View.GONE);
+
+            mAdapter.setList(productions);
+        });
 
         mAdapter.setOnItemClickListener(production -> {
             productionViewModel.setProduction(production);
