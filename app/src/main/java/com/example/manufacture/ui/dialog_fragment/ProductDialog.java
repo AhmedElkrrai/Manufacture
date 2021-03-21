@@ -71,6 +71,10 @@ public class ProductDialog extends DialogFragment {
 
                 String componentName = binding.componentsEditText.getEditText().getText().toString();
                 String componentAmount = binding.componentAmountEditText.getEditText().getText().toString();
+
+                if (Integer.parseInt(componentAmount) <= 0)
+                    componentAmount = "1";
+
                 int id;
 
                 if (componentName.isEmpty() || componentAmount.isEmpty() || productName.isEmpty()) {

@@ -10,4 +10,10 @@
     <string name="save">حفظ</string>
     <string name="cancel">الغاء</string>
     <string name="warning_message">Warning : You Will Not Be Able To Edit Patch Number, Materials Will Be Consumed.</string>
+    <string name="operate">تشغيل</string>
+    <string name="availiable_batches">التشغيلات المتاحة</string>
+    <string name="available">Available</string>
+    <string name="batches">Batches</string>
+    <string name="material">Material</string>
+    <string name="then">Then</string>
 </resources>

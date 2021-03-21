@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -38,12 +39,65 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/batch_number"
                 android:inputType="phone"
+                android:imeOptions="actionDone"
                 android:maxLength="32"
                 android:textAlignment="viewStart"
                 android:textColor="@color/primary"
                 android:textSize="14sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/linearlayout"
+            android:layout_marginTop="@dimen/_130sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/DetailsDialogTextStyle"
+                android:layout_height="match_parent"
+                android:text="@string/material"
+                android:textColor="@color/primary" />
+
+            <TextView
+                style="@style/DetailsDialogTextStyle"
+                android:layout_height="match_parent"
+                android:text="@string/available"
+                android:textColor="@color/primary" />
+
+            <TextView
+                style="@style/DetailsDialogTextStyle"
+                android:layout_height="match_parent"
+                android:text="@string/then"
+                android:textColor="@color/primary" />
+
+            <TextView
+                style="@style/DetailsDialogTextStyle"
+                android:layout_height="match_parent"
+                android:text="@string/batches"
+                android:textColor="@color/primary" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+             android:layout_below="@+id/linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/_195sdp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/consumption_RecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constrainedHeight="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/consumption_item" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:layout_width="@dimen/_300sdp"
@@ -78,7 +132,7 @@
             android:layout_marginEnd="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_24sdp"
             android:background="@drawable/edit_round_2"
-            android:text="تشغيل"
+            android:text="@string/operate"
             android:textColor="@color/weird_green"
             app:backgroundTint="@color/white" />
 

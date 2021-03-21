@@ -89,7 +89,7 @@
                 android:layout_height="match_parent"
                 android:gravity="top"
                 android:imeOptions="actionNext"
-                android:inputType="phone"
+                android:inputType="number"
                 android:textColor="@color/primary"
                 android:textSize="14sp"
                 tools:ignore="HardcodedText" />
