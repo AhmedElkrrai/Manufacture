@@ -63,13 +63,15 @@ public class ComponentDialog extends DialogFragment {
         for (String s : subscribedProductsArr) {
             productViewModel.getProductById(Integer.parseInt(s))
                     .observe(getActivity(), product -> {
-                        subscriptions.add(product.getProductName());
-                        mAdapter.notifyDataSetChanged();
+                        if (product != null) {
+                            subscriptions.add(product.getProductName());
+                            mAdapter.notifyDataSetChanged();
+                        }
                     });
         }
 
-        mAdapter.setOnSubscriptionClicked(productName -> {
-            productViewModel.getProductByName(productName).observe(getActivity(), product -> {
+        mAdapter.setOnSubscriptionClicked(productName -> productViewModel.getProductByName(productName).observe(getActivity(), product -> {
+            if (product != null) {
                 String[] componentsAmounts = product.getComponents().split(":");
                 int componentId = component.getId();
                 int availableAmount = Integer.parseInt(component.getAvailableAmount());
@@ -87,8 +89,8 @@ public class ComponentDialog extends DialogFragment {
                 batchesAmount = Double.parseDouble(twoDForm.format(batchesAmount));
 
                 binding.componentBatchesText.getEditText().setText(String.format("%s", batchesAmount));
-            });
-        });
+            }
+        }));
 
         mRecyclerView.setAdapter(mAdapter);
 

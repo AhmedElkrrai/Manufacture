@@ -128,7 +128,6 @@ public class ProductDialog extends DialogFragment {
             binding.componentsEditText.setEnabled(false);
             binding.componentsEditText.getEditText().setTextColor(Color.parseColor("#93aee6"));
 
-
             //get Product
             productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
             Product product = productViewModel.getProduct();

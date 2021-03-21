@@ -63,26 +63,27 @@ public class ViewProductionDialog extends DialogFragment {
         int productID = production.getProductID();
 
         productViewModel.getProductById(productID).observe(getActivity(), product -> {
-            String componentsStr = product.getComponents();
-            String[] componentsArray = componentsStr.split(":");
+            if (product != null) {
+                String componentsStr = product.getComponents();
+                String[] componentsArray = componentsStr.split(":");
 
-            for (int i = 0; i < componentsArray.length; i += 2) {
-                int id = Integer.parseInt(componentsArray[i]);
-                String amount = componentsArray[i + 1];
+                for (int i = 0; i < componentsArray.length; i += 2) {
+                    int id = Integer.parseInt(componentsArray[i]);
+                    String amount = componentsArray[i + 1];
 
-                componentsViewModel
-                        .getComponentById(id)
-                        .observe(this, component -> {
+                    componentsViewModel
+                            .getComponentById(id)
+                            .observe(this, component -> {
 
-                            double batchesAmount = Integer.parseInt(component.getAvailableAmount()) * 1.0 / Integer.parseInt(amount) * 1.0;
-                            DecimalFormat twoDForm = new DecimalFormat("#.#");
-                            batchesAmount = Double.parseDouble(twoDForm.format(batchesAmount));
+                                double batchesAmount = Integer.parseInt(component.getAvailableAmount()) * 1.0 / Integer.parseInt(amount) * 1.0;
+                                DecimalFormat twoDForm = new DecimalFormat("#.#");
+                                batchesAmount = Double.parseDouble(twoDForm.format(batchesAmount));
 
-                            batches.add(new ComponentBatch(component.getComponentName(), batchesAmount + "", amount));
-                            mAdapter.notifyDataSetChanged();
-                        });
+                                batches.add(new ComponentBatch(component.getComponentName(), batchesAmount + "", amount));
+                                mAdapter.notifyDataSetChanged();
+                            });
+                }
             }
-
         });
 
         return view;

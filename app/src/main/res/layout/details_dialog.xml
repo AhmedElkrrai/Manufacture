@@ -18,7 +18,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
             android:fontFamily="@font/noto_sans_arabic_semi_bold"
-            android:text="Product"
+            android:text="@string/product_name"
             android:textColor="@color/primary"
             android:textSize="24sp" />
 
@@ -32,15 +32,15 @@
 
             <TextView
                 style="@style/DetailsDialogTextStyle"
-                android:text="Material" />
+                android:text="@string/material" />
 
             <TextView
                 style="@style/DetailsDialogTextStyle"
-                android:text="Amount" />
+                android:text="@string/amount" />
 
             <TextView
                 style="@style/DetailsDialogTextStyle"
-                android:text="Available" />
+                android:text="@string/available_amount" />
 
         </LinearLayout>
 

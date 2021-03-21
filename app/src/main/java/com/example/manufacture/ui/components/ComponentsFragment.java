@@ -15,8 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.manufacture.R;
 import com.example.manufacture.databinding.FragmentComponentsBinding;
+import com.example.manufacture.model.Component;
 import com.example.manufacture.ui.adapter.ComponentAdapter;
 import com.example.manufacture.ui.dialog_fragment.ComponentDialog;
+import com.example.manufacture.ui.dialog_fragment.DeleteDialog;
 
 public class ComponentsFragment extends Fragment {
 
@@ -40,7 +42,10 @@ public class ComponentsFragment extends Fragment {
             new ComponentDialog().show(getFragmentManager(), "Update_Component");
         });
 
-        //TODO: on long press open a dialog to delete component
+        mAdapter.setOnItemLongClickListener(component -> {
+            componentsViewModel.setComponent(component);
+            new DeleteDialog().show(getFragmentManager(), "Delete_Component_Dialog");
+        });
 
         return view;
     }

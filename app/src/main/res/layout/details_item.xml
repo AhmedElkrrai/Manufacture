@@ -24,21 +24,21 @@
                     android:layout_height="match_parent"
                     style="@style/DetailsDialogTextStyle"
                     android:textColor="@color/un_active_primary"
-                    android:text="Name" />
+                    android:text="@string/material" />
 
                 <TextView
                     android:layout_height="match_parent"
                     android:id="@+id/details_component_amount"
                     style="@style/DetailsDialogTextStyle"
                     android:textColor="@color/primary"
-                    android:text="Amount" />
+                    android:text="@string/amount" />
 
                 <TextView
                     android:layout_height="match_parent"
                     android:id="@+id/details_component_available_amount"
                     style="@style/DetailsDialogTextStyle"
                     android:textColor="@color/weird_green"
-                    android:text="Available" />
+                    android:text="@string/available_amount" />
 
             </LinearLayout>
 

@@ -17,7 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.manufacture.R;
 import com.example.manufacture.databinding.FragmentDashboardBinding;
 import com.example.manufacture.model.Product;
+import com.example.manufacture.model.Production;
 import com.example.manufacture.ui.adapter.ProductionAdapter;
+import com.example.manufacture.ui.dialog_fragment.DeleteDialog;
 import com.example.manufacture.ui.dialog_fragment.ProductDialog;
 import com.example.manufacture.ui.dialog_fragment.ViewProductionDialog;
 import com.example.manufacture.ui.home.ProductViewModel;
@@ -45,6 +47,11 @@ public class DashboardFragment extends Fragment {
         mAdapter.setOnItemClickListener(production -> {
             productionViewModel.setProduction(production);
             new ViewProductionDialog().show(getFragmentManager(), "View_Production_Dialog");
+        });
+
+        mAdapter.setOnItemLongClickListener(production -> {
+            productionViewModel.setProduction(production);
+            new DeleteDialog().show(getFragmentManager(), "Delete_Production_Dialog");
         });
 
         return view;

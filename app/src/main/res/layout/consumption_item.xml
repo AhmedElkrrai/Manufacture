@@ -30,7 +30,7 @@
                     android:id="@+id/consumption_available"
                     style="@style/DetailsDialogTextStyle"
                     android:layout_height="match_parent"
-                    android:text="@string/available"
+                    android:text="@string/available_amount"
                     android:textColor="@color/weird_green" />
 
                 <TextView

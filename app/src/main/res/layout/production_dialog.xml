@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
-            android:text="Product"
+            android:text="@string/product_name"
             android:textColor="@color/primary"
             android:textSize="24sp" />
 
@@ -63,7 +63,7 @@
             <TextView
                 style="@style/DetailsDialogTextStyle"
                 android:layout_height="match_parent"
-                android:text="@string/available"
+                android:text="@string/available_amount"
                 android:textColor="@color/primary" />
 
             <TextView

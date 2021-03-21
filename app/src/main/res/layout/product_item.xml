@@ -32,7 +32,7 @@
                 android:textColor="@color/primary"
                 android:textSize="16sp"
                 android:layout_marginStart="@dimen/_16sdp"
-                android:text="Product" />
+                android:text="@string/product_name" />
 
             <ImageButton
                 android:id="@+id/product_details_BT"

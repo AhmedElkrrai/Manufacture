@@ -31,7 +31,7 @@
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginBottom="@dimen/_16sdp"
                 android:fontFamily="@font/noto_sans_arabic_semi_bold"
-                android:text="2021-3-15"
+                android:text="@string/date"
                 android:textColor="@color/primary"
                 android:textSize="14sp" />
 
@@ -43,7 +43,7 @@
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_above="@+id/production_item_patch_number"
                 android:fontFamily="@font/noto_sans_arabic_semi_bold"
-                android:text="Deadly Venom"
+                android:text="@string/product_name"
                 android:layout_marginBottom="@dimen/_8sdp"
                 android:textColor="@color/primary"
                 android:textSize="18sp" />
@@ -58,7 +58,7 @@
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:layout_marginBottom="@dimen/_16sdp"
                 android:fontFamily="@font/noto_sans_arabic_semi_bold"
-                android:text="102933-46673-15"
+                android:text="@string/example_batch"
                 android:textColor="@color/orange_pink"
                 android:textSize="14sp" />
         </RelativeLayout>

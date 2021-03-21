@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.manufacture.R;
 import com.example.manufacture.model.Component;
+import com.example.manufacture.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 public class ComponentAdapter extends RecyclerView.Adapter<ComponentAdapter.ComponentHolder> {
     private static List<Component> components = new ArrayList<>();
     private static OnItemClickListener listener;
+    private static OnItemLongClickListener longListener;
 
     @NonNull
     @Override
@@ -58,6 +60,15 @@ public class ComponentAdapter extends RecyclerView.Adapter<ComponentAdapter.Comp
                         listener.onItemClicked(components.get(position));
                 }
             });
+
+            itemView.setOnLongClickListener(v -> {
+                if (longListener != null) {
+                    int position = ComponentHolder.this.getAdapterPosition();
+                    if (longListener != null && position != RecyclerView.NO_POSITION)
+                        longListener.onItemLongClicked(components.get(position));
+                }
+                return false;
+            });
         }
     }
 
@@ -65,7 +76,15 @@ public class ComponentAdapter extends RecyclerView.Adapter<ComponentAdapter.Comp
         void onItemClicked(Component component);
     }
 
+    public interface OnItemLongClickListener {
+        void onItemLongClicked(Component component);
+    }
+
     public void setOnItemClickListener(OnItemClickListener listener) {
         ComponentAdapter.listener = listener;
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener longListener) {
+        ComponentAdapter.longListener = longListener;
     }
 }

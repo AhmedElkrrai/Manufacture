@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -14,16 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.manufacture.model.Product;
-import com.example.manufacture.model.Production;
 import com.example.manufacture.ui.adapter.ProductAdapter;
 import com.example.manufacture.ui.dashboard.ProductionViewModel;
+import com.example.manufacture.ui.dialog_fragment.DeleteDialog;
 import com.example.manufacture.ui.dialog_fragment.DetailsDialog;
 import com.example.manufacture.ui.dialog_fragment.ProductDialog;
 import com.example.manufacture.R;
 import com.example.manufacture.databinding.FragmentHomeBinding;
 import com.example.manufacture.ui.dialog_fragment.ProductionDialog;
-
-import java.time.LocalDate;
 
 public class HomeFragment extends Fragment {
 
@@ -67,6 +64,11 @@ public class HomeFragment extends Fragment {
 
                 new ProductionDialog().show(getFragmentManager(), "Production_Dialog");
             }
+        });
+
+        mAdapter.setOnItemLongClickListener(product -> {
+            productViewModel.setProduct(product);
+            new DeleteDialog().show(getFragmentManager(), "Delete_Product_Dialog");
         });
 
         return view;

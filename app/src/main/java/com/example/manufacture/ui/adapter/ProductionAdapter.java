@@ -19,6 +19,7 @@ import java.util.List;
 public class ProductionAdapter extends RecyclerView.Adapter<ProductionAdapter.ProductionHolder> {
     private static List<Production> mProductionList = new ArrayList<>();
     private static OnItemClickListener listener;
+    private static OnItemLongClickListener longListener;
 
     @NonNull
     @Override
@@ -59,6 +60,15 @@ public class ProductionAdapter extends RecyclerView.Adapter<ProductionAdapter.Pr
                         listener.onItemClicked(mProductionList.get(position));
                 }
             });
+
+            itemView.setOnLongClickListener(v -> {
+                if (longListener != null) {
+                    int position = ProductionHolder.this.getAdapterPosition();
+                    if (longListener != null && position != RecyclerView.NO_POSITION)
+                        longListener.onItemLongClicked(mProductionList.get(position));
+                }
+                return false;
+            });
         }
     }
 
@@ -66,7 +76,15 @@ public class ProductionAdapter extends RecyclerView.Adapter<ProductionAdapter.Pr
         void onItemClicked(Production production);
     }
 
+    public interface OnItemLongClickListener {
+        void onItemLongClicked(Production production);
+    }
+
     public void setOnItemClickListener(OnItemClickListener listener) {
         ProductionAdapter.listener = listener;
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener longListener) {
+        ProductionAdapter.longListener = longListener;
     }
 }

@@ -18,6 +18,7 @@ import java.util.List;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductHolder> {
     private static List<Product> mProductsList = new ArrayList<>();
     private static OnItemClickListener listener;
+    private static OnItemLongClickListener longListener;
 
     @NonNull
     @Override
@@ -52,10 +53,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
 
             itemView.setOnClickListener(v -> {
                 if (listener != null) {
-                    int position = getAdapterPosition();
+                    int position = ProductHolder.this.getAdapterPosition();
                     if (listener != null && position != RecyclerView.NO_POSITION)
                         listener.onItemClicked(mProductsList.get(position));
                 }
+            });
+
+            itemView.setOnLongClickListener(v -> {
+                if (longListener != null) {
+                    int position = ProductHolder.this.getAdapterPosition();
+                    if (longListener != null && position != RecyclerView.NO_POSITION)
+                        longListener.onItemLongClicked(mProductsList.get(position));
+                }
+                return false;
             });
 
             detailsBT.setOnClickListener(v -> {
@@ -84,7 +94,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
         void onProduceClicked(Product product);
     }
 
+    public interface OnItemLongClickListener {
+        void onItemLongClicked(Product product);
+    }
+
     public void setOnItemClickListener(OnItemClickListener listener) {
         ProductAdapter.listener = listener;
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener longListener) {
+        ProductAdapter.longListener = longListener;
     }
 }
