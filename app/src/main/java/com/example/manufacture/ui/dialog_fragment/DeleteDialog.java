@@ -72,7 +72,7 @@ public class DeleteDialog extends DialogFragment {
                         for (int i = 0; i < components.length; i += 2) {
                             int componentId = Integer.parseInt(components[i]);
                             if (component.getId() != componentId)
-                                componentBuilder.append(components[i]).append(":").append(components[i + 1]);
+                                componentBuilder.append(components[i]).append(":").append(components[i + 1]).append(":");
                         }
                         sub.setComponents(componentBuilder.toString());
                         if (componentBuilder.length() == 0)

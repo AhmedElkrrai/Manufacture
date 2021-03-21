@@ -138,13 +138,17 @@ public class ProductDialog extends DialogFragment {
             String componentsStr = product.getComponents();
             String[] componentsArray = componentsStr.split(":");
 
-            componentsViewModel = ViewModelProviders.of(getActivity()).get(ComponentsViewModel.class);
-            componentsViewModel.getComponentById(Integer.parseInt(componentsArray[0]))
-                    .observe(getActivity(), component -> binding.componentsEditText.getEditText().setText(component.getComponentName()));
-            binding.componentAmountEditText.getEditText().setText(componentsArray[1]);
-
             AtomicInteger x = new AtomicInteger(0);
             AtomicInteger y = new AtomicInteger(1);
+
+            componentsViewModel = ViewModelProviders.of(getActivity()).get(ComponentsViewModel.class);
+            componentsViewModel.getComponentById(Integer.parseInt(componentsArray[x.get()]))
+                    .observe(getActivity(), component -> {
+                        if (component != null) {
+                            binding.componentsEditText.getEditText().setText(component.getComponentName());
+                            binding.componentAmountEditText.getEditText().setText(componentsArray[y.get()]);
+                        }
+                    });
 
             binding.previousComponent.setOnClickListener(v -> {
                 if (y.get() == componentsArray.length - 1) {
@@ -155,8 +159,12 @@ public class ProductDialog extends DialogFragment {
                     y.addAndGet(2);
                 }
                 componentsViewModel.getComponentById(Integer.parseInt(componentsArray[x.get()]))
-                        .observe(getActivity(), component -> binding.componentsEditText.getEditText().setText(component.getComponentName()));
-                binding.componentAmountEditText.getEditText().setText(componentsArray[y.get()]);
+                        .observe(getActivity(), component -> {
+                            if (component != null) {
+                                binding.componentsEditText.getEditText().setText(component.getComponentName());
+                                binding.componentAmountEditText.getEditText().setText(componentsArray[y.get()]);
+                            }
+                        });
             });
 
             //update product

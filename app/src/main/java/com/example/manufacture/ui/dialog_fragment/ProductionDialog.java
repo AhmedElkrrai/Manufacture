@@ -72,23 +72,25 @@ public class ProductionDialog extends DialogFragment {
 
             componentsViewModel.getComponentById(Integer.parseInt(componentID))
                     .observe(getActivity(), component -> {
-                        componentsAmountMap.put(component, amount);
+                        if (component != null) {
+                            componentsAmountMap.put(component, amount);
 
-                        //add consumption to the adapter
-                        int availableAmount = Integer.parseInt(component.getAvailableAmount());
-                        int consumedAmount = Integer.parseInt(amount);
+                            //add consumption to the adapter
+                            int availableAmount = Integer.parseInt(component.getAvailableAmount());
+                            int consumedAmount = Integer.parseInt(amount);
 
-                        String then = String.valueOf(availableAmount - consumedAmount);
-                        if (availableAmount - consumedAmount < 0)
-                            then = "-";
+                            String then = String.valueOf(availableAmount - consumedAmount);
+                            if (availableAmount - consumedAmount < 0)
+                                then = "-";
 
-                        double batchesAmount = availableAmount * 1.0 / consumedAmount * 1.0;
-                        DecimalFormat twoDForm = new DecimalFormat("#.#");
-                        batchesAmount = Double.parseDouble(twoDForm.format(batchesAmount));
+                            double batchesAmount = availableAmount * 1.0 / consumedAmount * 1.0;
+                            DecimalFormat twoDForm = new DecimalFormat("#.#");
+                            batchesAmount = Double.parseDouble(twoDForm.format(batchesAmount));
 
-                        consumptions.add(new Consumption(component.getComponentName(), String.valueOf(availableAmount), then, String.format("%s", batchesAmount)));
+                            consumptions.add(new Consumption(component.getComponentName(), String.valueOf(availableAmount), then, String.format("%s", batchesAmount)));
 
-                        mAdapter.notifyDataSetChanged();
+                            mAdapter.notifyDataSetChanged();
+                        }
                     });
         }
 
