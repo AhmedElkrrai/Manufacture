@@ -1,8 +1,10 @@
 package com.example.manufacture.ui.adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,9 +29,16 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.DetailsH
 
     @Override
     public void onBindViewHolder(@NonNull DetailsHolder holder, int position) {
+        String amount = mDetailsList.get(position).getProductAmount();
+        String availableAmount = mDetailsList.get(position).getAvailableAmount();
+
         holder.name.setText(mDetailsList.get(position).getComponentName());
-        holder.amount.setText(mDetailsList.get(position).getProductAmount());
-        holder.availableAmount.setText(mDetailsList.get(position).getAvailableAmount());
+        holder.amount.setText(amount);
+        holder.availableAmount.setText(availableAmount);
+
+        if (((Integer.parseInt(availableAmount) * 1.0) / (Integer.parseInt(amount) * 1.0)) <= 2.0)
+            holder.availableAmount.setTextColor(Color.parseColor("#ff4b4b"));
+        else holder.availableAmount.setTextColor(Color.parseColor("#51dc90"));
     }
 
     @Override

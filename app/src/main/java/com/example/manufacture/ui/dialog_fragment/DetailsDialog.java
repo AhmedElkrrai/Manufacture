@@ -36,7 +36,7 @@ public class DetailsDialog extends DialogFragment {
         DetailsDialogBinding binding = DataBindingUtil.inflate(inflater, R.layout.details_dialog, container, false);
         View view = binding.getRoot();
 
-        componentsViewModel = ViewModelProviders.of(getActivity()).get(ComponentsViewModel.class);
+        componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
 
         //get Product
         productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
@@ -65,7 +65,7 @@ public class DetailsDialog extends DialogFragment {
 
             componentsViewModel
                     .getComponentById(id)
-                    .observe(getActivity(), component -> {
+                    .observe(this, component -> {
                         if (component != null) {
                             details.add(new Details(component.getComponentName(), component.getAvailableAmount(), amount));
                             mAdapter.notifyDataSetChanged();
@@ -90,6 +90,6 @@ public class DetailsDialog extends DialogFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
-        componentsViewModel = ViewModelProviders.of(getActivity()).get(ComponentsViewModel.class);
+        componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
     }
 }

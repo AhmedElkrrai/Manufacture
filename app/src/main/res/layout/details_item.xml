@@ -21,33 +21,33 @@
 
                 <TextView
                     android:id="@+id/details_component_name"
-                    android:layout_height="match_parent"
                     style="@style/DetailsDialogTextStyle"
-                    android:textColor="@color/un_active_primary"
-                    android:text="@string/material" />
+                    android:layout_height="match_parent"
+                    android:text="@string/material"
+                    android:textColor="@color/un_active_primary" />
 
                 <TextView
-                    android:layout_height="match_parent"
                     android:id="@+id/details_component_amount"
                     style="@style/DetailsDialogTextStyle"
-                    android:textColor="@color/primary"
-                    android:text="@string/amount" />
+                    android:layout_height="match_parent"
+                    android:text="@string/amount"
+                    android:textColor="@color/primary" />
 
                 <TextView
-                    android:layout_height="match_parent"
                     android:id="@+id/details_component_available_amount"
                     style="@style/DetailsDialogTextStyle"
-                    android:textColor="@color/weird_green"
-                    android:text="@string/available_amount" />
+                    android:layout_height="match_parent"
+                    android:text="@string/available_amount"
+                    android:textColor="@color/weird_green" />
 
             </LinearLayout>
 
             <View
-                android:layout_marginTop="@dimen/_87sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
-                android:layout_marginEnd="@dimen/_48sdp"
                 android:layout_marginStart="@dimen/_48sdp"
+                android:layout_marginTop="@dimen/_87sdp"
+                android:layout_marginEnd="@dimen/_48sdp"
                 android:background="#A4CACAE1" />
 
         </RelativeLayout>

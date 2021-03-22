@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.manufacture.R;
@@ -23,6 +24,7 @@ import com.example.manufacture.ui.components.ComponentsViewModel;
 import com.example.manufacture.ui.dashboard.ProductionViewModel;
 import com.example.manufacture.ui.home.ProductViewModel;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,9 +54,9 @@ public class ProductDialog extends DialogFragment {
             HashMap<String, Integer> componentMap = new HashMap<>();
             HashMap<Integer, Component> componentIdMap = new HashMap<>();
 
-            componentsViewModel = ViewModelProviders.of(getActivity()).get(ComponentsViewModel.class);
+            componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
             List<Component> list = new ArrayList<>();
-            componentsViewModel.getAllComponents().observe(getActivity(), components -> {
+            componentsViewModel.getAllComponents().observe(this, components -> {
                 list.addAll(components);
                 for (int i = 0; i < list.size(); i++) {
                     componentMap.put(list.get(i).getComponentName(), list.get(i).getId());
@@ -100,15 +102,42 @@ public class ProductDialog extends DialogFragment {
                 String productName = binding.productNameEditText.getEditText().getText().toString();
                 String components = componentsStringBuilder.toString();
 
+                Product newProduct = new Product(productName, components);
+
+                String[] componentsId = components.split(":");
+
                 if (productName.isEmpty() || components.isEmpty()) {
                     Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                int productId = productViewModel.insert(new Product(productName, components));
+                //check if low stock
+                for (int i = 0; i < componentsId.length; i += 2) {
+                    int componentId = Integer.parseInt(componentsId[i]);
+                    Component newComponent = componentIdMap.get(componentId);
 
-                String[] componentsId = components.split(":");
+                    boolean componentState = newComponent.isLowStock();
 
+                    int available = Integer.parseInt(newComponent.getAvailableAmount());
+                    int amount = Integer.parseInt(componentsId[i + 1]);
+
+                    double availableBatches = getAvailableBatches(available, amount);
+
+                    if (availableBatches <= 2.0) {
+                        newProduct.setLowStock(true);
+                        newComponent.setLowStock(true);
+                    } else {
+                        newProduct.setLowStock(false);
+                        newComponent.setLowStock(false);
+                    }
+
+                    if (componentState != newComponent.isLowStock())
+                        componentsViewModel.update(newComponent);
+                }
+
+                int productId = productViewModel.insert(newProduct);
+
+                //subscribe the product to its components
                 for (int i = 0; i < componentsId.length; i += 2) {
                     int componentId = Integer.parseInt(componentsId[i]);
                     Component newComponent = componentIdMap.get(componentId);
@@ -117,9 +146,7 @@ public class ProductDialog extends DialogFragment {
                     componentsViewModel.update(newComponent);
                 }
 
-                Toast.makeText(getActivity(), "Product Saved", Toast.LENGTH_SHORT).show();
                 Objects.requireNonNull(getDialog()).dismiss();
-
             });
         }
 
@@ -141,9 +168,9 @@ public class ProductDialog extends DialogFragment {
             AtomicInteger x = new AtomicInteger(0);
             AtomicInteger y = new AtomicInteger(1);
 
-            componentsViewModel = ViewModelProviders.of(getActivity()).get(ComponentsViewModel.class);
+            componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
             componentsViewModel.getComponentById(Integer.parseInt(componentsArray[x.get()]))
-                    .observe(getActivity(), component -> {
+                    .observe(this, component -> {
                         if (component != null) {
                             binding.componentsEditText.getEditText().setText(component.getComponentName());
                             binding.componentAmountEditText.getEditText().setText(componentsArray[y.get()]);
@@ -159,7 +186,7 @@ public class ProductDialog extends DialogFragment {
                     y.addAndGet(2);
                 }
                 componentsViewModel.getComponentById(Integer.parseInt(componentsArray[x.get()]))
-                        .observe(getActivity(), component -> {
+                        .observe(this, component -> {
                             if (component != null) {
                                 binding.componentsEditText.getEditText().setText(component.getComponentName());
                                 binding.componentAmountEditText.getEditText().setText(componentsArray[y.get()]);
@@ -169,12 +196,15 @@ public class ProductDialog extends DialogFragment {
 
             //update product
 
+            //A list of on going productions in case of product name was changed
             List<Production> productions = new ArrayList<>();
 
-            ProductionViewModel productionViewModel =
-                    ViewModelProviders.of(getActivity()).get(ProductionViewModel.class);
+            ProductionViewModel productionViewModel = ViewModelProviders.of(getActivity()).get(ProductionViewModel.class);
 
             productionViewModel.getProductionsByProductId(product.getId()).observe(getActivity(), productionsList -> productions.addAll(productionsList));
+
+            //A list of components in case of component amount was changed
+            ArrayList<Component> updatedComponents = new ArrayList<>();
 
             binding.addComponent.setOnClickListener(v -> {
                 String componentName = binding.componentsEditText.getEditText().getText().toString();
@@ -186,6 +216,26 @@ public class ProductDialog extends DialogFragment {
                 }
 
                 componentsArray[y.get()] = componentAmount;
+
+                //check if low stock
+                int componentID = Integer.parseInt(componentsArray[x.get()]);
+                int amount = Integer.parseInt(componentAmount);
+                componentsViewModel.getComponentById(componentID).observe(this, component -> {
+                    boolean componentState = component.isLowStock();
+
+                    int available = Integer.parseInt(component.getAvailableAmount());
+                    double availableBatches = getAvailableBatches(available, amount);
+                    if (availableBatches <= 2.0) {
+                        product.setLowStock(true);
+                        component.setLowStock(true);
+                    } else {
+                        product.setLowStock(false);
+                        component.setLowStock(false);
+                    }
+
+                    if (componentState != component.isLowStock())
+                        updatedComponents.add(component);
+                });
 
                 binding.componentsEditText.getEditText().setText("");
                 binding.componentAmountEditText.getEditText().setText("");
@@ -213,7 +263,11 @@ public class ProductDialog extends DialogFragment {
                     productionViewModel.update(production);
                 }
 
-                Toast.makeText(getActivity(), "Product Updated", Toast.LENGTH_SHORT).show();
+                if (!updatedComponents.isEmpty()) {
+                    for (Component component : updatedComponents)
+                        componentsViewModel.update(component);
+                }
+
                 Objects.requireNonNull(getDialog()).dismiss();
             });
 
@@ -239,6 +293,12 @@ public class ProductDialog extends DialogFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
-        componentsViewModel = ViewModelProviders.of(getActivity()).get(ComponentsViewModel.class);
+        componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
+    }
+
+    private double getAvailableBatches(int availableAmount, int amount) {
+        double batchesAmount = availableAmount * 1.0 / amount * 1.0;
+        DecimalFormat twoDForm = new DecimalFormat("#.#");
+        return Double.parseDouble(twoDForm.format(batchesAmount));
     }
 }

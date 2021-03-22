@@ -29,6 +29,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
     @Override
     public void onBindViewHolder(@NonNull ProductHolder holder, int position) {
         holder.productName.setText(mProductsList.get(position).getProductName());
+        if (mProductsList.get(position).isLowStock()) {
+            holder.caution.setVisibility(View.VISIBLE);
+        } else holder.caution.setVisibility(View.GONE);
     }
 
     @Override
@@ -43,13 +46,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
 
     public static class ProductHolder extends RecyclerView.ViewHolder {
         public TextView productName;
-        public ImageButton detailsBT, produceBT;
+        public ImageButton detailsBT, produceBT, caution;
 
         public ProductHolder(@NonNull View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.product_name_item);
             detailsBT = itemView.findViewById(R.id.product_details_BT);
             produceBT = itemView.findViewById(R.id.produceBT);
+            caution = itemView.findViewById(R.id.product_caution);
 
             itemView.setOnClickListener(v -> {
                 if (listener != null) {

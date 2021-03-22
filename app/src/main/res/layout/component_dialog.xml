@@ -176,7 +176,6 @@
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="@dimen/_246sdp"
-            android:layout_marginEnd="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_94sdp">
 
             <androidx.recyclerview.widget.RecyclerView

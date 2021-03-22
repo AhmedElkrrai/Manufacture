@@ -22,9 +22,9 @@ import com.example.manufacture.model.Consumption;
 import com.example.manufacture.model.Product;
 import com.example.manufacture.model.Production;
 import com.example.manufacture.ui.adapter.ConsumptionAdapter;
-import com.example.manufacture.ui.adapter.SubscriptionAdapter;
 import com.example.manufacture.ui.components.ComponentsViewModel;
 import com.example.manufacture.ui.dashboard.ProductionViewModel;
+import com.example.manufacture.ui.home.ProductViewModel;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -44,7 +44,8 @@ public class ProductionDialog extends DialogFragment {
 
         //init view models
         productionViewModel = ViewModelProviders.of(getActivity()).get(ProductionViewModel.class);
-        ComponentsViewModel componentsViewModel = ViewModelProviders.of(getActivity()).get(ComponentsViewModel.class);
+        ProductViewModel productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
+        ComponentsViewModel componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
 
         //display product name
         Product product = productionViewModel.getProduct();
@@ -66,12 +67,14 @@ public class ProductionDialog extends DialogFragment {
         String[] componentsArr = product.getComponents().split(":");
         HashMap<Component, String> componentsAmountMap = new HashMap<>();
 
+        product.setLowStock(false);
+
         for (int i = 0; i < componentsArr.length; i += 2) {
             String componentID = componentsArr[i];
             String amount = componentsArr[i + 1];
 
             componentsViewModel.getComponentById(Integer.parseInt(componentID))
-                    .observe(getActivity(), component -> {
+                    .observe(this, component -> {
                         if (component != null) {
                             componentsAmountMap.put(component, amount);
 
@@ -86,6 +89,9 @@ public class ProductionDialog extends DialogFragment {
                             double batchesAmount = availableAmount * 1.0 / consumedAmount * 1.0;
                             DecimalFormat twoDForm = new DecimalFormat("#.#");
                             batchesAmount = Double.parseDouble(twoDForm.format(batchesAmount));
+
+                            if (batchesAmount <= 3.0)
+                                product.setLowStock(true);
 
                             consumptions.add(new Consumption(component.getComponentName(), String.valueOf(availableAmount), then, String.format("%s", batchesAmount)));
 
@@ -146,6 +152,9 @@ public class ProductionDialog extends DialogFragment {
 
             //start production
             productionViewModel.insert(new Production(product.getId(), getCurrentDate(), patchNumber, product.getProductName()));
+
+            //check is low stock and show caution
+            productViewModel.update(product);
 
             getDialog().dismiss();
         });

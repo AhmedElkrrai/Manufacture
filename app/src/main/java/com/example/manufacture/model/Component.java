@@ -13,6 +13,8 @@ public class Component {
     private String availableAmount;
     private String subscribedProducts;
 
+    private boolean lowStock;
+
     public Component(String componentName, String providerName, String availableAmount) {
         this.componentName = componentName;
         this.providerName = providerName;
@@ -58,5 +60,13 @@ public class Component {
 
     public void setAvailableAmount(String availableAmount) {
         this.availableAmount = availableAmount;
+    }
+
+    public boolean isLowStock() {
+        return lowStock;
+    }
+
+    public void setLowStock(boolean lowStock) {
+        this.lowStock = lowStock;
     }
 }

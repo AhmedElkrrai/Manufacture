@@ -15,7 +15,7 @@
     <string name="ar_save">حفظ</string>
     <string name="cancel">Cancel</string>
     <string name="ar_cancel">الغاء</string>
-    <string name="warning_message">Warning : You Will Not Be Able To Edit Patch Number, Materials Will Be Consumed.</string>
+    <string name="warning_message">Warning : You Will Not Be Able To Edit Batch Number, Materials Will Be Consumed.</string>
     <string name="delete_warning_message">Warning : Item Will Be Permanently Deleted.</string>
     <string name="operate">Operate</string>
     <string name="ar_operate">تشغيل</string>

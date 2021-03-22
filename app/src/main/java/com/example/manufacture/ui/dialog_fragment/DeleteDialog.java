@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.manufacture.R;
@@ -114,6 +113,6 @@ public class DeleteDialog extends DialogFragment {
         super.onActivityCreated(savedInstanceState);
         productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
         productionViewModel = ViewModelProviders.of(getActivity()).get(ProductionViewModel.class);
-        componentsViewModel = ViewModelProviders.of(getActivity()).get(ComponentsViewModel.class);
+        componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
     }
 }

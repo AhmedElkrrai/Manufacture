@@ -22,7 +22,7 @@ public interface ProductDAO {
     @Delete
     void delete(Product product);
 
-    @Query("SELECT * FROM product_table")
+    @Query("SELECT * FROM product_table ORDER BY lowStock DESC")
     LiveData<List<Product>> getAllProducts();
 
     @Query("SELECT * FROM product_table where id = :productId")

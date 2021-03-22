@@ -24,7 +24,7 @@ public interface ComponentDAO {
     @Delete
     void delete(Component component);
 
-    @Query("SELECT * FROM component_table")
+    @Query("SELECT * FROM component_table ORDER BY lowStock DESC")
     LiveData<List<Component>> getAllComponents();
 
     @Query("SELECT * FROM component_table where id = :componentId")

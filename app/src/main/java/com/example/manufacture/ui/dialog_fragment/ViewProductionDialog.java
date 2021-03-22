@@ -103,6 +103,6 @@ public class ViewProductionDialog extends DialogFragment {
         super.onActivityCreated(savedInstanceState);
         productionViewModel = ViewModelProviders.of(getActivity()).get(ProductionViewModel.class);
         productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
-        componentsViewModel = ViewModelProviders.of(getActivity()).get(ComponentsViewModel.class);
+        componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
     }
 }

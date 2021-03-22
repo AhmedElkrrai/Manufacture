@@ -17,12 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.manufacture.R;
 import com.example.manufacture.databinding.ComponentDialogBinding;
 import com.example.manufacture.model.Component;
+import com.example.manufacture.model.Product;
 import com.example.manufacture.ui.adapter.SubscriptionAdapter;
 import com.example.manufacture.ui.components.ComponentsViewModel;
 import com.example.manufacture.ui.home.ProductViewModel;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class ComponentDialog extends DialogFragment {
@@ -32,10 +34,12 @@ public class ComponentDialog extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //set up
         ComponentDialogBinding binding = DataBindingUtil.inflate(inflater, R.layout.component_dialog, container, false);
         View view = binding.getRoot();
 
         binding.backButton.setOnClickListener(v -> Objects.requireNonNull(getDialog()).dismiss());
+        HashMap<Product, Integer> productAmountMap = new HashMap<>();
 
         // get component
         componentsViewModel = ViewModelProviders.of(getActivity()).get(ComponentsViewModel.class);
@@ -54,43 +58,43 @@ public class ComponentDialog extends DialogFragment {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        ArrayList<String> subscriptions = new ArrayList<>();
+        ArrayList<Product> subscriptions = new ArrayList<>();
         mAdapter.setList(subscriptions);
 
         String[] subscribedProductsArr = component.getSubscribedProducts().split(":");
         productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
 
-        for (String s : subscribedProductsArr) {
-            productViewModel.getProductById(Integer.parseInt(s))
+        for (String subID : subscribedProductsArr) {
+            productViewModel.getProductById(Integer.parseInt(subID))
                     .observe(getActivity(), product -> {
                         if (product != null) {
-                            subscriptions.add(product.getProductName());
+                            subscriptions.add(product);
                             mAdapter.notifyDataSetChanged();
+
+                            //fill productAmountMap
+                            String[] componentsAmounts = product.getComponents().split(":");
+                            int componentId = component.getId();
+                            int amount;
+
+                            for (int i = 0; i < componentsAmounts.length; i += 2) {
+                                if (Integer.parseInt(componentsAmounts[i]) == componentId) {
+                                    amount = Integer.parseInt(componentsAmounts[i + 1]);
+                                    productAmountMap.put(product, amount);
+                                    break;
+                                }
+                            }
                         }
                     });
         }
 
-        mAdapter.setOnSubscriptionClicked(productName -> productViewModel.getProductByName(productName).observe(getActivity(), product -> {
+        //display subscription available batches
+        mAdapter.setOnSubscriptionClicked(product -> {
             if (product != null) {
-                String[] componentsAmounts = product.getComponents().split(":");
-                int componentId = component.getId();
                 int availableAmount = Integer.parseInt(component.getAvailableAmount());
-                int amount = 0;
-
-                for (int i = 0; i < componentsAmounts.length; i += 2) {
-                    if (Integer.parseInt(componentsAmounts[i]) == componentId) {
-                        amount = Integer.parseInt(componentsAmounts[i + 1]);
-                        break;
-                    }
-                }
-
-                double batchesAmount = availableAmount * 1.0 / amount * 1.0;
-                DecimalFormat twoDForm = new DecimalFormat("#.#");
-                batchesAmount = Double.parseDouble(twoDForm.format(batchesAmount));
-
-                binding.componentBatchesText.getEditText().setText(String.format("%s", batchesAmount));
+                int amount = productAmountMap.get(product);
+                binding.componentBatchesText.getEditText().setText(String.format("%s", getAvailableBatches(availableAmount, amount)));
             }
-        }));
+        });
 
         mRecyclerView.setAdapter(mAdapter);
 
@@ -104,9 +108,31 @@ public class ComponentDialog extends DialogFragment {
             component.setAvailableAmount(availableAmount);
             component.setProviderName(providerName);
 
+            if (componentName.isEmpty() || availableAmount.isEmpty()) {
+                Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // check if low stock
+            component.setLowStock(false);
+
+            int available = Integer.parseInt(availableAmount);
+            for (Product sub : subscriptions) {
+                boolean productState = sub.isLowStock();
+
+                int amount = productAmountMap.get(sub);
+                double batchesAmount = getAvailableBatches(available, amount);
+                if (batchesAmount <= 2.0) {
+                    component.setLowStock(true);
+                    sub.setLowStock(true);
+                } else sub.setLowStock(false);
+
+                if (productState != sub.isLowStock())
+                    productViewModel.update(sub);
+            }
+
             componentsViewModel.update(component);
 
-            Toast.makeText(getActivity(), "Component Updated", Toast.LENGTH_SHORT).show();
             getDialog().dismiss();
         });
 
@@ -114,6 +140,12 @@ public class ComponentDialog extends DialogFragment {
         binding.cancelComponentBT.setOnClickListener(v -> getDialog().dismiss());
 
         return view;
+    }
+
+    private double getAvailableBatches(int availableAmount, int amount) {
+        double batchesAmount = availableAmount * 1.0 / amount * 1.0;
+        DecimalFormat twoDForm = new DecimalFormat("#.#");
+        return Double.parseDouble(twoDForm.format(batchesAmount));
     }
 
     @Override
@@ -128,7 +160,7 @@ public class ComponentDialog extends DialogFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        componentsViewModel = ViewModelProviders.of(getActivity()).get(ComponentsViewModel.class);
+        componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
         productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
     }
 }

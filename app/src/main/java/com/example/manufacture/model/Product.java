@@ -10,6 +10,7 @@ public class Product {
 
     private String productName;
     private String components;
+    private boolean lowStock;
 
     public Product(String productName, String components) {
         this.productName = productName;
@@ -38,5 +39,13 @@ public class Product {
 
     public void setComponents(String components) {
         this.components = components;
+    }
+
+    public boolean isLowStock() {
+        return lowStock;
+    }
+
+    public void setLowStock(boolean lowStock) {
+        this.lowStock = lowStock;
     }
 }

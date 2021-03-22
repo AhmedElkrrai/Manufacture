@@ -1,9 +1,14 @@
 package com.example.manufacture.ui.components;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -22,11 +27,16 @@ import com.example.manufacture.ui.dialog_fragment.DeleteDialog;
 
 public class ComponentsFragment extends Fragment {
 
+    public ComponentsFragment() {
+
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentComponentsBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_components, container, false);
         View view = binding.getRoot();
 
         ComponentsViewModel componentsViewModel = new ViewModelProvider(getActivity()).get(ComponentsViewModel.class);
+        binding.setLifecycleOwner(this);
 
         RecyclerView mRecyclerView = binding.componentRecyclerView;
 
@@ -50,6 +60,16 @@ public class ComponentsFragment extends Fragment {
         mAdapter.setOnItemLongClickListener(component -> {
             componentsViewModel.setComponent(component);
             new DeleteDialog().show(getFragmentManager(), "Delete_Component_Dialog");
+        });
+
+
+        binding.searchBar.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+            String query = binding.searchBar.getText().toString();
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                mAdapter.getFilter().filter(query);
+                return true;
+            }
+            return false;
         });
 
         return view;

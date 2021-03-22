@@ -1,21 +1,24 @@
 package com.example.manufacture.ui.adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.manufacture.R;
+import com.example.manufacture.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapter.SubscriptionHolder> {
-    private static List<String> mSubscriptionList = new ArrayList<>();
+    private static List<Product> mSubscriptionList = new ArrayList<>();
     private static OnItemClickListener listener;
 
     @NonNull
@@ -26,7 +29,11 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
 
     @Override
     public void onBindViewHolder(@NonNull SubscriptionHolder holder, int position) {
-        holder.subscription.setText(mSubscriptionList.get(position));
+        holder.subscription.setText(mSubscriptionList.get(position).getProductName());
+        if (mSubscriptionList.get(position).isLowStock())
+            holder.caution.setVisibility(View.VISIBLE);
+        else holder.caution.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -34,17 +41,19 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
         return mSubscriptionList.size();
     }
 
-    public void setList(List<String> subscriptions) {
+    public void setList(List<Product> subscriptions) {
         mSubscriptionList = subscriptions;
         notifyDataSetChanged();
     }
 
     public static class SubscriptionHolder extends RecyclerView.ViewHolder {
         public TextView subscription;
+        public ImageButton caution;
 
         public SubscriptionHolder(@NonNull View itemView) {
             super(itemView);
             subscription = itemView.findViewById(R.id.subscribed_product_TV);
+            caution = itemView.findViewById(R.id.subscription_caution);
 
             subscription.setOnClickListener(v -> {
                 if (listener != null) {
@@ -57,7 +66,7 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
     }
 
     public interface OnItemClickListener {
-        void onSubscriptionClicked(String productName);
+        void onSubscriptionClicked(Product product);
     }
 
     public void setOnSubscriptionClicked(OnItemClickListener listener) {
