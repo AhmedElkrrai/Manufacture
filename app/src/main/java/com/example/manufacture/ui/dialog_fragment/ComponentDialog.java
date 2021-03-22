@@ -29,8 +29,6 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class ComponentDialog extends DialogFragment {
-    private ComponentsViewModel componentsViewModel;
-    private ProductViewModel productViewModel;
 
     @Nullable
     @Override
@@ -43,7 +41,7 @@ public class ComponentDialog extends DialogFragment {
         HashMap<Product, Integer> productAmountMap = new HashMap<>();
 
         // get component
-        componentsViewModel = ViewModelProviders.of(getActivity()).get(ComponentsViewModel.class);
+        ComponentsViewModel componentsViewModel = ViewModelProviders.of(getActivity()).get(ComponentsViewModel.class);
         Component component = componentsViewModel.getComponent();
 
         // display component
@@ -63,7 +61,7 @@ public class ComponentDialog extends DialogFragment {
         mAdapter.setList(subscriptions);
 
         String[] subscribedProductsArr = component.getSubscribedProducts().split(":");
-        productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
+        ProductViewModel  productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
 
         for (String subID : subscribedProductsArr) {
             productViewModel.getProductById(Integer.parseInt(subID))
@@ -157,12 +155,5 @@ public class ComponentDialog extends DialogFragment {
         int width = getResources().getDimensionPixelSize(R.dimen._329sdp);
         int height = getResources().getDimensionPixelSize(R.dimen._455sdp);
         getDialog().getWindow().setLayout(width, height);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
-        productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
     }
 }

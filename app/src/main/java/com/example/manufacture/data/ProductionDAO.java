@@ -7,7 +7,6 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.manufacture.model.Product;
 import com.example.manufacture.model.Production;
 
 import java.util.List;
@@ -25,9 +24,6 @@ public interface ProductionDAO {
 
     @Query("SELECT * FROM production_table")
     LiveData<List<Production>> getAllProductions();
-
-    @Query("SELECT * FROM production_table where id = :productionId")
-    LiveData<Production> getProductionById(int productionId);
 
     @Query("SELECT * FROM production_table where productID = :productID")
     LiveData<List<Production>> getProductionsByProductId(int productID);

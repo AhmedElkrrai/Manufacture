@@ -8,9 +8,9 @@ public class Production {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private int productID;
-    private String productionEnrolmentDate;
-    private String patchNumber;
+    private final int productID;
+    private final String productionEnrolmentDate;
+    private final String patchNumber;
     private String productName;
 
     public Production(int productID, String productionEnrolmentDate, String patchNumber, String productName) {
@@ -32,24 +32,12 @@ public class Production {
         return productID;
     }
 
-    public void setProductID(int productID) {
-        this.productID = productID;
-    }
-
     public String getProductionEnrolmentDate() {
         return productionEnrolmentDate;
     }
 
-    public void setProductionEnrolmentDate(String productionEnrolmentDate) {
-        this.productionEnrolmentDate = productionEnrolmentDate;
-    }
-
     public String getPatchNumber() {
         return patchNumber;
-    }
-
-    public void setPatchNumber(String patchNumber) {
-        this.patchNumber = patchNumber;
     }
 
     public String getProductName() {

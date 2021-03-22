@@ -34,7 +34,6 @@ import java.util.Map;
 import java.util.Objects;
 
 public class ProductionDialog extends DialogFragment {
-    private ProductionViewModel productionViewModel;
 
     @Nullable
     @Override
@@ -43,7 +42,7 @@ public class ProductionDialog extends DialogFragment {
         View view = binding.getRoot();
 
         //init view models
-        productionViewModel = ViewModelProviders.of(getActivity()).get(ProductionViewModel.class);
+        ProductionViewModel productionViewModel = ViewModelProviders.of(getActivity()).get(ProductionViewModel.class);
         ProductViewModel productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
         ComponentsViewModel componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
 
@@ -165,6 +164,10 @@ public class ProductionDialog extends DialogFragment {
         return view;
     }
 
+    private String getCurrentDate() {
+        return LocalDate.now().toString();
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -172,15 +175,5 @@ public class ProductionDialog extends DialogFragment {
         int width = getResources().getDimensionPixelSize(R.dimen._329sdp);
         int height = getResources().getDimensionPixelSize(R.dimen._505sdp);
         getDialog().getWindow().setLayout(width, height);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        productionViewModel = ViewModelProviders.of(getActivity()).get(ProductionViewModel.class);
-    }
-
-    private String getCurrentDate() {
-        return LocalDate.now().toString();
     }
 }

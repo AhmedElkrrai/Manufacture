@@ -42,10 +42,6 @@ public class ProductionViewModel extends AndroidViewModel {
         return allProductions;
     }
 
-    public LiveData<Production> getProductionById(int id) {
-        return repository.getProductionById(id);
-    }
-
     public LiveData<List<Production>> getProductionsByProductId(int productId) {
         return repository.getProductionsByProductId(productId);
     }

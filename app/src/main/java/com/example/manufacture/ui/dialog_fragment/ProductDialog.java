@@ -53,7 +53,7 @@ public class ProductDialog extends DialogFragment {
             HashMap<String, Integer> componentMap = new HashMap<>();
             HashMap<Integer, Component> componentIdMap = new HashMap<>();
 
-            componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
+            ComponentsViewModel componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
             List<Component> list = new ArrayList<>();
             componentsViewModel.getAllComponents().observe(this, components -> {
                 Log.i("TAG", "sadbugs: pro 1");
@@ -286,6 +286,12 @@ public class ProductDialog extends DialogFragment {
         return view;
     }
 
+    private double getAvailableBatches(int availableAmount, int amount) {
+        double batchesAmount = availableAmount * 1.0 / amount * 1.0;
+        DecimalFormat twoDForm = new DecimalFormat("#.#");
+        return Double.parseDouble(twoDForm.format(batchesAmount));
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -293,18 +299,5 @@ public class ProductDialog extends DialogFragment {
         int width = getResources().getDimensionPixelSize(R.dimen._329sdp);
         int height = getResources().getDimensionPixelSize(R.dimen._355sdp);
         getDialog().getWindow().setLayout(width, height);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
-        componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
-    }
-
-    private double getAvailableBatches(int availableAmount, int amount) {
-        double batchesAmount = availableAmount * 1.0 / amount * 1.0;
-        DecimalFormat twoDForm = new DecimalFormat("#.#");
-        return Double.parseDouble(twoDForm.format(batchesAmount));
     }
 }

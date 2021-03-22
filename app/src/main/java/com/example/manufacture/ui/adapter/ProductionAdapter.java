@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.manufacture.R;
-import com.example.manufacture.model.Product;
 import com.example.manufacture.model.Production;
 
 import java.util.ArrayList;

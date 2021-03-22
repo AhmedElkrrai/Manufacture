@@ -27,7 +27,4 @@ public interface ProductDAO {
 
     @Query("SELECT * FROM product_table where id = :productId")
     LiveData<Product> getProductById(int productId);
-
-    @Query("SELECT * FROM product_table where productName = :productName")
-    LiveData<Product> getProductByName(String productName);
 }

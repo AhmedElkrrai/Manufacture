@@ -33,10 +33,6 @@ public class ProductionRepository {
         sharedPreferences = application.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
     }
 
-    public LiveData<Production> getProductionById(int id) {
-        return productionDAO.getProductionById(id);
-    }
-
     public LiveData<List<Production>> getProductionsByProductId(int productId) {
         return productionDAO.getProductionsByProductId(productId);
     }

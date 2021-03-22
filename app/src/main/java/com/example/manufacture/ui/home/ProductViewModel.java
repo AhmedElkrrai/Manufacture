@@ -44,10 +44,6 @@ public class ProductViewModel extends AndroidViewModel {
         return repository.getProductById(id);
     }
 
-    public LiveData<Product> getProductByName(String productName) {
-        return repository.getProductByName(productName);
-    }
-
     public Product getProduct() {
         return product;
     }

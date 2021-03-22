@@ -28,9 +28,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class ViewProductionDialog extends DialogFragment {
-    private ProductionViewModel productionViewModel;
-    private ProductViewModel productViewModel;
-    private ComponentsViewModel componentsViewModel;
 
     @Nullable
     @Override
@@ -39,7 +36,7 @@ public class ViewProductionDialog extends DialogFragment {
         View view = binding.getRoot();
 
         //get production
-        productionViewModel = ViewModelProviders.of(getActivity()).get(ProductionViewModel.class);
+        ProductionViewModel productionViewModel = ViewModelProviders.of(getActivity()).get(ProductionViewModel.class);
         Production production = productionViewModel.getProduction();
 
         //display product name
@@ -58,8 +55,8 @@ public class ViewProductionDialog extends DialogFragment {
         mRecyclerView.setAdapter(mAdapter);
 
         //display product components
-        productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
-        componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
+        ProductViewModel productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
+        ComponentsViewModel componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
 
         int productID = production.getProductID();
 
@@ -98,13 +95,5 @@ public class ViewProductionDialog extends DialogFragment {
         int width = getResources().getDimensionPixelSize(R.dimen._329sdp);
         int height = getResources().getDimensionPixelSize(R.dimen._455sdp);
         getDialog().getWindow().setLayout(width, height);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        productionViewModel = ViewModelProviders.of(getActivity()).get(ProductionViewModel.class);
-        productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
-        componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
     }
 }

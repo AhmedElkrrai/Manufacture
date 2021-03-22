@@ -21,9 +21,6 @@ import com.example.manufacture.ui.dialog_fragment.ViewProductionDialog;
 
 public class DashboardFragment extends Fragment {
 
-    public DashboardFragment() {
-    }
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentDashboardBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dashboard, container, false);
         View view = binding.getRoot();

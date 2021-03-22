@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,8 +27,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class DetailsDialog extends DialogFragment {
-    private ProductViewModel productViewModel;
-    private ComponentsViewModel componentsViewModel;
 
     @Nullable
     @Override
@@ -37,10 +34,10 @@ public class DetailsDialog extends DialogFragment {
         DetailsDialogBinding binding = DataBindingUtil.inflate(inflater, R.layout.details_dialog, container, false);
         View view = binding.getRoot();
 
-        componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
+        ComponentsViewModel componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
 
         //get Product
-        productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
+        ProductViewModel productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
         Product product = productViewModel.getProduct();
 
         //display product name
@@ -86,12 +83,5 @@ public class DetailsDialog extends DialogFragment {
         int width = getResources().getDimensionPixelSize(R.dimen._329sdp);
         int height = getResources().getDimensionPixelSize(R.dimen._455sdp);
         getDialog().getWindow().setLayout(width, height);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
-        componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
     }
 }

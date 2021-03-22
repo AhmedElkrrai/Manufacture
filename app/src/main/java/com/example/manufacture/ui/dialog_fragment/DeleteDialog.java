@@ -111,12 +111,4 @@ public class DeleteDialog extends DialogFragment {
         int height = getResources().getDimensionPixelSize(R.dimen._235sdp);
         getDialog().getWindow().setLayout(width, height);
     }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
-        productionViewModel = ViewModelProviders.of(getActivity()).get(ProductionViewModel.class);
-        componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
-    }
 }
