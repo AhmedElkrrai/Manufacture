@@ -1,5 +1,6 @@
 package com.example.manufacture.ui.adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ public class ConsumptionAdapter extends RecyclerView.Adapter<ConsumptionAdapter.
         holder.available.setText(mConsumptionList.get(position).getAvailableAmount());
         holder.then.setText(mConsumptionList.get(position).getPostProductionAmount());
         holder.batches.setText(mConsumptionList.get(position).getAvailableBatches());
+        if (Double.parseDouble(mConsumptionList.get(position).getAvailableBatches()) <= 2.0)
+            holder.batches.setTextColor(Color.parseColor("#ff4b4b"));
     }
 
     @Override

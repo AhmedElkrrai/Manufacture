@@ -1,5 +1,6 @@
 package com.example.manufacture.ui.adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ public class BatchAdapter extends RecyclerView.Adapter<BatchAdapter.BatchHolder>
         holder.componentName.setText(mComponentBatchesList.get(position).getComponentName());
         holder.componentBatches.setText(mComponentBatchesList.get(position).getBatchesAmount());
         holder.componentAmount.setText(mComponentBatchesList.get(position).getComponentAmount());
+        if (Double.parseDouble(mComponentBatchesList.get(position).getBatchesAmount()) <= 2.0)
+            holder.componentBatches.setTextColor(Color.parseColor("#ff4b4b"));
     }
 
     @Override
@@ -41,7 +44,8 @@ public class BatchAdapter extends RecyclerView.Adapter<BatchAdapter.BatchHolder>
     }
 
     public static class BatchHolder extends RecyclerView.ViewHolder {
-        public TextView componentName, componentBatches,componentAmount;
+        public TextView componentName, componentBatches, componentAmount;
+
         public BatchHolder(@NonNull View itemView) {
             super(itemView);
             componentName = itemView.findViewById(R.id.view_production_component_name);

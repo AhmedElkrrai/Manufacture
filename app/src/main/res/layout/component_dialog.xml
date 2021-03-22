@@ -40,6 +40,7 @@
                 android:hint="@string/component_name"
                 android:inputType="textCapCharacters"
                 android:maxLength="32"
+                android:imeOptions="actionDone"
                 android:textAlignment="viewStart"
                 android:textColor="@color/primary"
                 android:textSize="14sp" />
@@ -115,6 +116,7 @@
                 android:hint="@string/provider_name"
                 android:inputType="text"
                 android:maxLength="32"
+                android:imeOptions="actionDone"
                 android:textAlignment="viewStart"
                 android:textColor="@color/primary"
                 android:textSize="14sp" />
