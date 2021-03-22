@@ -1,6 +1,7 @@
 package com.example.manufacture.ui.dialog_fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,8 @@ public class ComponentDialog extends DialogFragment {
 
         for (String subID : subscribedProductsArr) {
             productViewModel.getProductById(Integer.parseInt(subID))
-                    .observe(getActivity(), product -> {
+                    .observe(this, product -> {
+                        Log.i("TAG", "sadbugs: comp_dialog");
                         if (product != null) {
                             subscriptions.add(product);
                             mAdapter.notifyDataSetChanged();

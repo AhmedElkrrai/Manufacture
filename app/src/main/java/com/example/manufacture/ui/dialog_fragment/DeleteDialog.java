@@ -1,6 +1,7 @@
 package com.example.manufacture.ui.dialog_fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,10 @@ public class DeleteDialog extends DialogFragment {
 
             for (String subscription : subscriptions) {
                 int productId = Integer.parseInt(subscription);
-                productViewModel.getProductById(productId).observe(getActivity(), product -> subscribedProducts.add(product));
+                productViewModel.getProductById(productId).observe(this, product -> {
+                    Log.i("TAG", "sadbugs: del_dialog");
+                    subscribedProducts.add(product);
+                });
             }
 
             binding.deleteItemBT.setOnClickListener(v -> {

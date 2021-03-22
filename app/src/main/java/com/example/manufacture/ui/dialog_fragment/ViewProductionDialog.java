@@ -1,6 +1,7 @@
 package com.example.manufacture.ui.dialog_fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,8 @@ public class ViewProductionDialog extends DialogFragment {
 
         int productID = production.getProductID();
 
-        productViewModel.getProductById(productID).observe(getActivity(), product -> {
+        productViewModel.getProductById(productID).observe(this, product -> {
+            Log.i("TAG", "sadbugs: view 1");
             if (product != null) {
                 String componentsStr = product.getComponents();
                 String[] componentsArray = componentsStr.split(":");
@@ -74,7 +76,7 @@ public class ViewProductionDialog extends DialogFragment {
                     componentsViewModel
                             .getComponentById(id)
                             .observe(this, component -> {
-
+                                Log.i("TAG", "sadbugs: view 2");
                                 double batchesAmount = Integer.parseInt(component.getAvailableAmount()) * 1.0 / Integer.parseInt(amount) * 1.0;
                                 DecimalFormat twoDForm = new DecimalFormat("#.#");
                                 batchesAmount = Double.parseDouble(twoDForm.format(batchesAmount));

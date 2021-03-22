@@ -1,6 +1,7 @@
 package com.example.manufacture.ui.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class HomeFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         productViewModel.getAllProducts().observe(getActivity(), products -> {
+            Log.i("TAG", "sadbugs: 3");
             if (products.isEmpty())
                 binding.emptyProducts.setVisibility(View.VISIBLE);
             else binding.emptyProducts.setVisibility(View.GONE);

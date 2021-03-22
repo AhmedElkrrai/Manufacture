@@ -75,6 +75,7 @@ public class ProductionDialog extends DialogFragment {
 
             componentsViewModel.getComponentById(Integer.parseInt(componentID))
                     .observe(this, component -> {
+                        Log.i("TAG", "sadbugs: production_dialog");
                         if (component != null) {
                             componentsAmountMap.put(component, amount);
 

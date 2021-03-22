@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.manufacture.R;
@@ -57,6 +56,7 @@ public class ProductDialog extends DialogFragment {
             componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
             List<Component> list = new ArrayList<>();
             componentsViewModel.getAllComponents().observe(this, components -> {
+                Log.i("TAG", "sadbugs: pro 1");
                 list.addAll(components);
                 for (int i = 0; i < list.size(); i++) {
                     componentMap.put(list.get(i).getComponentName(), list.get(i).getId());
@@ -171,6 +171,7 @@ public class ProductDialog extends DialogFragment {
             componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
             componentsViewModel.getComponentById(Integer.parseInt(componentsArray[x.get()]))
                     .observe(this, component -> {
+                        Log.i("TAG", "sadbugs: pro 2");
                         if (component != null) {
                             binding.componentsEditText.getEditText().setText(component.getComponentName());
                             binding.componentAmountEditText.getEditText().setText(componentsArray[y.get()]);
@@ -187,6 +188,7 @@ public class ProductDialog extends DialogFragment {
                 }
                 componentsViewModel.getComponentById(Integer.parseInt(componentsArray[x.get()]))
                         .observe(this, component -> {
+                            Log.i("TAG", "sadbugs: pro 3");
                             if (component != null) {
                                 binding.componentsEditText.getEditText().setText(component.getComponentName());
                                 binding.componentAmountEditText.getEditText().setText(componentsArray[y.get()]);
@@ -201,7 +203,10 @@ public class ProductDialog extends DialogFragment {
 
             ProductionViewModel productionViewModel = ViewModelProviders.of(getActivity()).get(ProductionViewModel.class);
 
-            productionViewModel.getProductionsByProductId(product.getId()).observe(getActivity(), productionsList -> productions.addAll(productionsList));
+            productionViewModel.getProductionsByProductId(product.getId()).observe(this, productionsList -> {
+                Log.i("TAG", "sadbugs: pro 4");
+                productions.addAll(productionsList);
+            });
 
             //A list of components in case of component amount was changed
             ArrayList<Component> updatedComponents = new ArrayList<>();
@@ -221,6 +226,7 @@ public class ProductDialog extends DialogFragment {
                 int componentID = Integer.parseInt(componentsArray[x.get()]);
                 int amount = Integer.parseInt(componentAmount);
                 componentsViewModel.getComponentById(componentID).observe(this, component -> {
+                    Log.i("TAG", "sadbugs: pro 5");
                     boolean componentState = component.isLowStock();
 
                     int available = Integer.parseInt(component.getAvailableAmount());

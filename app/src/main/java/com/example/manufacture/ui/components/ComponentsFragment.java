@@ -46,6 +46,7 @@ public class ComponentsFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         componentsViewModel.getAllComponents().observe(getActivity(), components -> {
+            Log.i("TAG", "sadbugs: 1");
             if (components.isEmpty())
                 binding.emptyComponents.setVisibility(View.VISIBLE);
             else binding.emptyComponents.setVisibility(View.GONE);

@@ -1,6 +1,7 @@
 package com.example.manufacture.ui.dialog_fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,7 @@ public class DetailsDialog extends DialogFragment {
             componentsViewModel
                     .getComponentById(id)
                     .observe(this, component -> {
+                        Log.i("TAG", "sadbugs: details_dialog");
                         if (component != null) {
                             details.add(new Details(component.getComponentName(), component.getAvailableAmount(), amount));
                             mAdapter.notifyDataSetChanged();
