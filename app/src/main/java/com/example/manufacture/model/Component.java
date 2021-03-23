@@ -14,16 +14,16 @@ public class Component {
     private String providerName;
     private String availableAmount;
     private String subscribedProducts;
+    private String stockBatches;
 
     private boolean lowStock;
-//    private HashMap<Integer, Boolean> stockMap;
 
     public Component(String componentName, String providerName, String availableAmount) {
         this.componentName = componentName;
         this.providerName = providerName;
         this.availableAmount = availableAmount;
         this.subscribedProducts = "";
-//        this.stockMap = new HashMap<>();
+        this.stockBatches = "";
     }
 
     public int getId() {
@@ -74,15 +74,11 @@ public class Component {
         this.lowStock = lowStock;
     }
 
-//    public HashMap<Integer, Boolean> getStockMap() {
-//        return stockMap;
-//    }
+    public String getStockBatches() {
+        return stockBatches;
+    }
 
-//    public void setStockMap(HashMap<Integer, Boolean> stockMap) {
-//        this.stockMap = stockMap;
-//    }
-
-//    public void updateStockMap(int productId, boolean stockState) {
-//        this.stockMap.put(productId, stockState);
-//    }
+    public void setStockBatches(String stockBatches) {
+        this.stockBatches = stockBatches;
+    }
 }

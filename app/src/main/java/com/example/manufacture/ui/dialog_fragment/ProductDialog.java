@@ -140,6 +140,36 @@ public class ProductDialog extends DialogFragment {
                     Component newComponent = componentIdMap.get(componentId);
 
                     newComponent.setSubscribedProducts(newComponent.getSubscribedProducts() + productId + ":");
+
+                    double available = Double.parseDouble(newComponent.getAvailableAmount());
+                    double amount = Double.parseDouble(componentsId[i + 1]);
+
+                    double availableBatches = getAvailableBatches(available, amount);
+
+                    //check all newComponent subscribed products to set low stock
+                    int state = 0;
+                    StringBuilder batchBuilder = new StringBuilder();
+                    String[] prodArr = newComponent.getSubscribedProducts().split(":");
+                    String[] stateArr = newComponent.getStockBatches().split(":");
+
+                    for (int j = 0; j < prodArr.length; j++) {
+                        int subId = Integer.parseInt(prodArr[j]);
+                        if (productId == subId) {
+                            if (availableBatches <= 2.0) {
+                                batchBuilder.append("1").append(":");
+                                ++state;
+                            } else batchBuilder.append("0").append(":");
+                        } else {
+                            String s = stateArr[j];
+                            batchBuilder.append(s).append(":");
+                            state += Integer.parseInt(s);
+                        }
+                    }
+
+                    newComponent.setStockBatches(batchBuilder.toString());
+
+                    newComponent.setLowStock(state != 0);
+
                     componentsViewModel.update(newComponent);
                 }
 
@@ -240,7 +270,6 @@ public class ProductDialog extends DialogFragment {
                 double amount = Double.parseDouble(componentAmount);
 
                 Component component = componentIdMap.get(componentID);
-                boolean componentState = component.isLowStock();
 
                 double available = Double.parseDouble(component.getAvailableAmount());
                 double availableBatches = getAvailableBatches(available, amount);
@@ -249,8 +278,31 @@ public class ProductDialog extends DialogFragment {
                     component.setLowStock(true);
                 }
 
-                if (componentState != component.isLowStock())
-                    updatedComponents.add(component);
+                //check all newComponent subscribed products to set low stock
+                int state = 0;
+                StringBuilder batchBuilder = new StringBuilder();
+                String[] prodArr = component.getSubscribedProducts().split(":");
+                String[] stateArr = component.getStockBatches().split(":");
+
+                for (int j = 0; j < prodArr.length; j++) {
+                    int subId = Integer.parseInt(prodArr[j]);
+                    if (product.getId() == subId) {
+                        if (availableBatches <= 2.0) {
+                            batchBuilder.append("1").append(":");
+                            ++state;
+                        } else batchBuilder.append("0").append(":");
+                    } else {
+                        String s = stateArr[j];
+                        batchBuilder.append(s).append(":");
+                        state += Integer.parseInt(s);
+                    }
+                }
+
+                component.setStockBatches(batchBuilder.toString());
+
+                component.setLowStock(state != 0);
+
+                updatedComponents.add(component);
 
                 binding.componentsEditText.getEditText().setText("");
                 binding.componentAmountEditText.getEditText().setText("");
