@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ProductDialog extends DialogFragment {
@@ -140,12 +139,26 @@ public class ProductDialog extends DialogFragment {
         }
 
         if (getTag().equals("Update_Product_Dialog")) {
+            //set up
             binding.addComponentProduct.setVisibility(View.GONE);
             binding.componentsEditText.setEnabled(false);
             binding.componentsEditText.getEditText().setTextColor(Color.parseColor("#93aee6"));
 
-            //get Product
             productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
+            componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
+
+            //fill componentIdMap
+            HashMap<Integer, Component> componentIdMap = new HashMap<>();
+
+            List<Component> list = new ArrayList<>();
+            componentsViewModel.getAllComponents().observe(this, components -> {
+                Log.i("TAG", "sadbugs: pro 9");
+                list.addAll(components);
+                for (int i = 0; i < list.size(); i++)
+                    componentIdMap.put(list.get(i).getId(), list.get(i));
+            });
+
+            //get Product
             Product product = productViewModel.getProduct();
 
             //display product
@@ -157,7 +170,6 @@ public class ProductDialog extends DialogFragment {
             AtomicInteger x = new AtomicInteger(0);
             AtomicInteger y = new AtomicInteger(1);
 
-            componentsViewModel = ViewModelProviders.of(this).get(ComponentsViewModel.class);
             componentsViewModel.getComponentById(Integer.parseInt(componentsArray[x.get()]))
                     .observe(this, component -> {
                         Log.i("TAG", "sadbugs: pro 2");
@@ -209,25 +221,27 @@ public class ProductDialog extends DialogFragment {
                     return;
                 }
 
+                if (Integer.parseInt(componentAmount) == 0)
+                    componentAmount = "1";
+
                 componentsArray[y.get()] = componentAmount;
 
                 //check if low stock
                 int componentID = Integer.parseInt(componentsArray[x.get()]);
                 double amount = Double.parseDouble(componentAmount);
-                componentsViewModel.getComponentById(componentID).observe(this, component -> {
-                    Log.i("TAG", "sadbugs: pro 5");
-                    boolean componentState = component.isLowStock();
 
-                    double available = Double.parseDouble(component.getAvailableAmount());
-                    double availableBatches = getAvailableBatches(available, amount);
-                    if (availableBatches <= 2.0) {
-                        product.setLowStock(true);
-                        component.setLowStock(true);
-                    }
+                Component component = componentIdMap.get(componentID);
+                boolean componentState = component.isLowStock();
 
-                    if (componentState != component.isLowStock())
-                        updatedComponents.add(component);
-                });
+                double available = Double.parseDouble(component.getAvailableAmount());
+                double availableBatches = getAvailableBatches(available, amount);
+                if (availableBatches <= 2.0) {
+                    product.setLowStock(true);
+                    component.setLowStock(true);
+                }
+
+                if (componentState != component.isLowStock())
+                    updatedComponents.add(component);
 
                 binding.componentsEditText.getEditText().setText("");
                 binding.componentAmountEditText.getEditText().setText("");
@@ -238,7 +252,7 @@ public class ProductDialog extends DialogFragment {
                 StringBuilder components = new StringBuilder();
 
                 //check if any component is low stock
-                AtomicBoolean productStockState = new AtomicBoolean(false);
+                boolean productStockState = false;
 
                 for (int i = 0; i < componentsArray.length; i += 2) {
                     String id = componentsArray[i];
@@ -247,14 +261,14 @@ public class ProductDialog extends DialogFragment {
 
                     int componentId = Integer.parseInt(id);
                     double amount = Double.parseDouble(componentAmount);
-                    componentsViewModel.getComponentById(componentId).observe(this, component -> {
-                        double available = Double.parseDouble(component.getAvailableAmount());
-                        if (getAvailableBatches(available, amount) <= 2.0)
-                            productStockState.set(true);
-                    });
+
+                    Component component = componentIdMap.get(componentId);
+                    double available = Double.parseDouble(component.getAvailableAmount());
+                    if (getAvailableBatches(available, amount) <= 2.0)
+                        productStockState = true;
                 }
 
-                product.setLowStock(productStockState.get());
+                product.setLowStock(productStockState);
 
                 if (productName.isEmpty() || components.length() == 0) {
                     Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();

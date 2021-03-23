@@ -19,6 +19,7 @@ import com.example.manufacture.R;
 import com.example.manufacture.databinding.ComponentDialogBinding;
 import com.example.manufacture.model.Component;
 import com.example.manufacture.model.Product;
+import com.example.manufacture.model.Subscription;
 import com.example.manufacture.ui.adapter.SubscriptionAdapter;
 import com.example.manufacture.ui.components.ComponentsViewModel;
 import com.example.manufacture.ui.home.ProductViewModel;
@@ -47,8 +48,10 @@ public class ComponentDialog extends DialogFragment {
         // display component
         binding.componentNameEditText.getEditText().setText(component.getComponentName());
         binding.componentProviderNameEditText.getEditText().setText(component.getProviderName());
-        binding.componentAvailableAmountEditText.getEditText().setText(String.valueOf(component.getAvailableAmount()));
         binding.componentBatchesText.getEditText().setText("-");
+
+        String availableString = component.getAvailableAmount();
+        binding.componentAvailableAmountEditText.getEditText().setText(availableString);
 
         //display subscriptions
         RecyclerView mRecyclerView = binding.subscriptionsRecyclerView;
@@ -57,20 +60,20 @@ public class ComponentDialog extends DialogFragment {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        ArrayList<Product> subscriptions = new ArrayList<>();
+        ArrayList<Subscription> subscriptions = new ArrayList<>();
+        ArrayList<Product> subscriptionsProducts = new ArrayList<>();
         mAdapter.setList(subscriptions);
 
         String[] subscribedProductsArr = component.getSubscribedProducts().split(":");
         ProductViewModel productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
+
+        double available = Double.parseDouble(availableString);
 
         for (String subID : subscribedProductsArr) {
             productViewModel.getProductById(Integer.parseInt(subID))
                     .observe(this, product -> {
                         Log.i("TAG", "sadbugs: comp_dialog");
                         if (product != null) {
-                            subscriptions.add(product);
-                            mAdapter.notifyDataSetChanged();
-
                             //fill productAmountMap
                             String[] componentsAmounts = product.getComponents().split(":");
                             int componentId = component.getId();
@@ -80,6 +83,10 @@ public class ComponentDialog extends DialogFragment {
                                 if (Integer.parseInt(componentsAmounts[i]) == componentId) {
                                     amount = Double.parseDouble(componentsAmounts[i + 1]);
                                     productAmountMap.put(product, amount);
+
+                                    subscriptions.add(new Subscription(product, getAvailableBatches(available, amount) <= 2.0));
+                                    subscriptionsProducts.add(product);
+                                    mAdapter.notifyDataSetChanged();
                                     break;
                                 }
                             }
@@ -116,16 +123,16 @@ public class ComponentDialog extends DialogFragment {
             // check if low stock
             component.setLowStock(false);
 
-            double available = Double.parseDouble(availableAmount);
-            for (Product sub : subscriptions) {
+            double availableDD = Double.parseDouble(availableAmount);
+            for (Product sub : subscriptionsProducts) {
                 boolean productState = sub.isLowStock();
 
                 double amount = productAmountMap.get(sub);
-                double batchesAmount = getAvailableBatches(available, amount);
+                double batchesAmount = getAvailableBatches(availableDD, amount);
                 if (batchesAmount <= 2.0) {
                     component.setLowStock(true);
                     sub.setLowStock(true);
-                } else sub.setLowStock(false);
+                }
 
                 if (productState != sub.isLowStock())
                     productViewModel.update(sub);
