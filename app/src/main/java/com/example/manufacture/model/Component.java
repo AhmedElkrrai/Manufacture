@@ -3,6 +3,8 @@ package com.example.manufacture.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.HashMap;
+
 @Entity(tableName = "component_table")
 public class Component {
     @PrimaryKey(autoGenerate = true)
@@ -14,12 +16,14 @@ public class Component {
     private String subscribedProducts;
 
     private boolean lowStock;
+//    private HashMap<Integer, Boolean> stockMap;
 
     public Component(String componentName, String providerName, String availableAmount) {
         this.componentName = componentName;
         this.providerName = providerName;
         this.availableAmount = availableAmount;
         this.subscribedProducts = "";
+//        this.stockMap = new HashMap<>();
     }
 
     public int getId() {
@@ -69,4 +73,16 @@ public class Component {
     public void setLowStock(boolean lowStock) {
         this.lowStock = lowStock;
     }
+
+//    public HashMap<Integer, Boolean> getStockMap() {
+//        return stockMap;
+//    }
+
+//    public void setStockMap(HashMap<Integer, Boolean> stockMap) {
+//        this.stockMap = stockMap;
+//    }
+
+//    public void updateStockMap(int productId, boolean stockState) {
+//        this.stockMap.put(productId, stockState);
+//    }
 }

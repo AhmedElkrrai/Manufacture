@@ -54,7 +54,7 @@ public class ComponentsFragment extends Fragment {
             new DeleteDialog().show(getFragmentManager(), "Delete_Component_Dialog");
         });
 
-
+        binding.searchBar.setFocusedByDefault(false);
         binding.searchBar.setOnEditorActionListener((textView, actionId, keyEvent) -> {
             String query = binding.searchBar.getText().toString();
             if (actionId == EditorInfo.IME_ACTION_DONE) {

@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ProductDialog extends DialogFragment {
@@ -74,8 +75,8 @@ public class ProductDialog extends DialogFragment {
                 String componentName = binding.componentsEditText.getEditText().getText().toString();
                 String componentAmount = binding.componentAmountEditText.getEditText().getText().toString();
 
-                if (Integer.parseInt(componentAmount) <= 0)
-                    componentAmount = "1";
+                if (Double.parseDouble(componentAmount) <= 0.0)
+                    componentAmount = "1.0";
 
                 int id;
 
@@ -87,6 +88,7 @@ public class ProductDialog extends DialogFragment {
                 if (!componentMap.containsKey(componentName)) {
                     Component newComponent =
                             new Component(componentName, "Provider", "0");
+
                     id = componentsViewModel.insert(newComponent);
                 } else id = componentMap.get(componentName);
 
@@ -111,30 +113,7 @@ public class ProductDialog extends DialogFragment {
                     return;
                 }
 
-                //check if low stock
-                for (int i = 0; i < componentsId.length; i += 2) {
-                    int componentId = Integer.parseInt(componentsId[i]);
-                    Component newComponent = componentIdMap.get(componentId);
-
-                    boolean componentState = newComponent.isLowStock();
-
-                    int available = Integer.parseInt(newComponent.getAvailableAmount());
-                    int amount = Integer.parseInt(componentsId[i + 1]);
-
-                    double availableBatches = getAvailableBatches(available, amount);
-
-                    if (availableBatches <= 2.0) {
-                        newProduct.setLowStock(true);
-                        newComponent.setLowStock(true);
-                    } else {
-                        newProduct.setLowStock(false);
-                        newComponent.setLowStock(false);
-                    }
-
-                    if (componentState != newComponent.isLowStock())
-                        componentsViewModel.update(newComponent);
-                }
-
+                newProduct.setLowStock(true);
                 int productId = productViewModel.insert(newProduct);
 
                 //subscribe the product to its components
@@ -143,6 +122,16 @@ public class ProductDialog extends DialogFragment {
                     Component newComponent = componentIdMap.get(componentId);
 
                     newComponent.setSubscribedProducts(newComponent.getSubscribedProducts() + productId + ":");
+
+                    //check if low stock
+                    double available = Double.parseDouble(newComponent.getAvailableAmount());
+                    double amount = Double.parseDouble(componentsId[i + 1]);
+
+                    double availableBatches = getAvailableBatches(available, amount);
+
+                    if (availableBatches <= 2.0)
+                        newComponent.setLowStock(true);
+
                     componentsViewModel.update(newComponent);
                 }
 
@@ -224,19 +213,16 @@ public class ProductDialog extends DialogFragment {
 
                 //check if low stock
                 int componentID = Integer.parseInt(componentsArray[x.get()]);
-                int amount = Integer.parseInt(componentAmount);
+                double amount = Double.parseDouble(componentAmount);
                 componentsViewModel.getComponentById(componentID).observe(this, component -> {
                     Log.i("TAG", "sadbugs: pro 5");
                     boolean componentState = component.isLowStock();
 
-                    int available = Integer.parseInt(component.getAvailableAmount());
+                    double available = Double.parseDouble(component.getAvailableAmount());
                     double availableBatches = getAvailableBatches(available, amount);
                     if (availableBatches <= 2.0) {
                         product.setLowStock(true);
                         component.setLowStock(true);
-                    } else {
-                        product.setLowStock(false);
-                        component.setLowStock(false);
                     }
 
                     if (componentState != component.isLowStock())
@@ -251,8 +237,24 @@ public class ProductDialog extends DialogFragment {
                 String productName = binding.productNameEditText.getEditText().getText().toString();
                 StringBuilder components = new StringBuilder();
 
-                for (String s : componentsArray)
-                    components.append(s).append(":");
+                //check if any component is low stock
+                AtomicBoolean productStockState = new AtomicBoolean(false);
+
+                for (int i = 0; i < componentsArray.length; i += 2) {
+                    String id = componentsArray[i];
+                    String componentAmount = componentsArray[i + 1];
+                    components.append(id).append(":").append(componentAmount).append(":");
+
+                    int componentId = Integer.parseInt(id);
+                    double amount = Double.parseDouble(componentAmount);
+                    componentsViewModel.getComponentById(componentId).observe(this, component -> {
+                        double available = Double.parseDouble(component.getAvailableAmount());
+                        if (getAvailableBatches(available, amount) <= 2.0)
+                            productStockState.set(true);
+                    });
+                }
+
+                product.setLowStock(productStockState.get());
 
                 if (productName.isEmpty() || components.length() == 0) {
                     Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
@@ -286,8 +288,8 @@ public class ProductDialog extends DialogFragment {
         return view;
     }
 
-    private double getAvailableBatches(int availableAmount, int amount) {
-        double batchesAmount = availableAmount * 1.0 / amount * 1.0;
+    private double getAvailableBatches(double availableAmount, double amount) {
+        double batchesAmount = availableAmount / amount;
         DecimalFormat twoDForm = new DecimalFormat("#.#");
         return Double.parseDouble(twoDForm.format(batchesAmount));
     }
@@ -299,5 +301,11 @@ public class ProductDialog extends DialogFragment {
         int width = getResources().getDimensionPixelSize(R.dimen._329sdp);
         int height = getResources().getDimensionPixelSize(R.dimen._355sdp);
         getDialog().getWindow().setLayout(width, height);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
     }
 }

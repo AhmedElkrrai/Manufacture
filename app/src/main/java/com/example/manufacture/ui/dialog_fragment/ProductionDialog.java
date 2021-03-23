@@ -79,14 +79,14 @@ public class ProductionDialog extends DialogFragment {
                             componentsAmountMap.put(component, amount);
 
                             //add consumption to the adapter
-                            int availableAmount = Integer.parseInt(component.getAvailableAmount());
-                            int consumedAmount = Integer.parseInt(amount);
+                            double availableAmount = Double.parseDouble(component.getAvailableAmount());
+                            double consumedAmount = Double.parseDouble(amount);
 
                             String then = String.valueOf(availableAmount - consumedAmount);
-                            if (availableAmount - consumedAmount < 0)
+                            if (availableAmount - consumedAmount < 0.0)
                                 then = "-";
 
-                            double batchesAmount = availableAmount * 1.0 / consumedAmount * 1.0;
+                            double batchesAmount = availableAmount / consumedAmount;
                             DecimalFormat twoDForm = new DecimalFormat("#.#");
                             batchesAmount = Double.parseDouble(twoDForm.format(batchesAmount));
 
@@ -115,24 +115,24 @@ public class ProductionDialog extends DialogFragment {
 
             for (Map.Entry<Component, String> entry : componentsAmountMap.entrySet()) {
                 Component component = entry.getKey();
-                int amount = Integer.parseInt(entry.getValue());
-                int availableAmount = Integer.parseInt(component.getAvailableAmount());
+                double amount = Double.parseDouble(entry.getValue());
+                double availableAmount = Double.parseDouble(component.getAvailableAmount());
 
-                if (availableAmount == 0) {
+                if (availableAmount == 0.0) {
                     String warningMessage = "Material(s) are Out Of Stock \n \t \tProduction Canceled.";
                     Toast.makeText(getActivity(), warningMessage, Toast.LENGTH_LONG).show();
                     getDialog().dismiss();
                     return;
                 }
 
-                if (availableAmount / amount < 1) {
+                if (availableAmount / amount < 1.0) {
                     String warningMessage = "Material(s) Required. \nProduction Canceled.";
                     Toast.makeText(getActivity(), warningMessage, Toast.LENGTH_LONG).show();
                     getDialog().dismiss();
                     return;
                 }
 
-                if (availableAmount / amount <= 2) {
+                if (availableAmount / amount <= 2.0) {
                     String warningMessage = " WARNING : Material(s) are On Low Stock.";
                     Toast.makeText(getActivity(), warningMessage, Toast.LENGTH_LONG).show();
                 }
@@ -141,12 +141,16 @@ public class ProductionDialog extends DialogFragment {
             // consume material(s)
             for (Map.Entry<Component, String> entry : componentsAmountMap.entrySet()) {
                 Component component = entry.getKey();
-                int amount = Integer.parseInt(entry.getValue());
-                int availableAmount = Integer.parseInt(component.getAvailableAmount());
+                double amount = Double.parseDouble(entry.getValue());
+                double availableAmount = Double.parseDouble(component.getAvailableAmount());
 
                 availableAmount -= amount;
                 component.setAvailableAmount(String.valueOf(availableAmount));
 
+                if ((availableAmount / amount) <= 2.0) {
+                    component.setLowStock(true);
+                    product.setLowStock(true);
+                }
                 componentsViewModel.update(component);
             }
 

@@ -74,7 +74,7 @@ public class ViewProductionDialog extends DialogFragment {
                             .getComponentById(id)
                             .observe(this, component -> {
                                 Log.i("TAG", "sadbugs: view 2");
-                                double batchesAmount = Integer.parseInt(component.getAvailableAmount()) * 1.0 / Integer.parseInt(amount) * 1.0;
+                                double batchesAmount = Double.parseDouble(component.getAvailableAmount()) / Double.parseDouble(amount);
                                 DecimalFormat twoDForm = new DecimalFormat("#.#");
                                 batchesAmount = Double.parseDouble(twoDForm.format(batchesAmount));
 

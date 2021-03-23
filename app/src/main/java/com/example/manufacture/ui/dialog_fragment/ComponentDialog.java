@@ -38,7 +38,7 @@ public class ComponentDialog extends DialogFragment {
         View view = binding.getRoot();
 
         binding.backButton.setOnClickListener(v -> Objects.requireNonNull(getDialog()).dismiss());
-        HashMap<Product, Integer> productAmountMap = new HashMap<>();
+        HashMap<Product, Double> productAmountMap = new HashMap<>();
 
         // get component
         ComponentsViewModel componentsViewModel = ViewModelProviders.of(getActivity()).get(ComponentsViewModel.class);
@@ -61,7 +61,7 @@ public class ComponentDialog extends DialogFragment {
         mAdapter.setList(subscriptions);
 
         String[] subscribedProductsArr = component.getSubscribedProducts().split(":");
-        ProductViewModel  productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
+        ProductViewModel productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
 
         for (String subID : subscribedProductsArr) {
             productViewModel.getProductById(Integer.parseInt(subID))
@@ -74,11 +74,11 @@ public class ComponentDialog extends DialogFragment {
                             //fill productAmountMap
                             String[] componentsAmounts = product.getComponents().split(":");
                             int componentId = component.getId();
-                            int amount;
+                            double amount;
 
                             for (int i = 0; i < componentsAmounts.length; i += 2) {
                                 if (Integer.parseInt(componentsAmounts[i]) == componentId) {
-                                    amount = Integer.parseInt(componentsAmounts[i + 1]);
+                                    amount = Double.parseDouble(componentsAmounts[i + 1]);
                                     productAmountMap.put(product, amount);
                                     break;
                                 }
@@ -90,8 +90,8 @@ public class ComponentDialog extends DialogFragment {
         //display subscription available batches
         mAdapter.setOnSubscriptionClicked(product -> {
             if (product != null) {
-                int availableAmount = Integer.parseInt(component.getAvailableAmount());
-                int amount = productAmountMap.get(product);
+                double availableAmount = Double.parseDouble(component.getAvailableAmount());
+                double amount = productAmountMap.get(product);
                 binding.componentBatchesText.getEditText().setText(String.format("%s", getAvailableBatches(availableAmount, amount)));
             }
         });
@@ -116,11 +116,11 @@ public class ComponentDialog extends DialogFragment {
             // check if low stock
             component.setLowStock(false);
 
-            int available = Integer.parseInt(availableAmount);
+            double available = Double.parseDouble(availableAmount);
             for (Product sub : subscriptions) {
                 boolean productState = sub.isLowStock();
 
-                int amount = productAmountMap.get(sub);
+                double amount = productAmountMap.get(sub);
                 double batchesAmount = getAvailableBatches(available, amount);
                 if (batchesAmount <= 2.0) {
                     component.setLowStock(true);
@@ -142,8 +142,8 @@ public class ComponentDialog extends DialogFragment {
         return view;
     }
 
-    private double getAvailableBatches(int availableAmount, int amount) {
-        double batchesAmount = availableAmount * 1.0 / amount * 1.0;
+    private double getAvailableBatches(double availableAmount, double amount) {
+        double batchesAmount = availableAmount / amount;
         DecimalFormat twoDForm = new DecimalFormat("#.#");
         return Double.parseDouble(twoDForm.format(batchesAmount));
     }

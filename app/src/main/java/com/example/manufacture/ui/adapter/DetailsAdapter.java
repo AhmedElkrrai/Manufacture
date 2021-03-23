@@ -36,7 +36,7 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.DetailsH
         holder.amount.setText(amount);
         holder.availableAmount.setText(availableAmount);
 
-        if (((Integer.parseInt(availableAmount) * 1.0) / (Integer.parseInt(amount) * 1.0)) <= 2.0)
+        if (((Double.parseDouble(availableAmount)) / (Double.parseDouble(amount)) <= 2.0))
             holder.availableAmount.setTextColor(Color.parseColor("#ff4b4b"));
         else holder.availableAmount.setTextColor(Color.parseColor("#51dc90"));
     }
