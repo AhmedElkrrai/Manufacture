@@ -112,7 +112,26 @@ public class ProductDialog extends DialogFragment {
                     return;
                 }
 
-                newProduct.setLowStock(true);
+                boolean stockState = false;
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < componentsId.length; i += 2) {
+                    int componentId = Integer.parseInt(componentsId[i]);
+                    Component newComponent = componentIdMap.get(componentId);
+
+                    double available = Double.parseDouble(newComponent.getAvailableAmount());
+                    double amount = Double.parseDouble(componentsId[i + 1]);
+
+                    double availableBatches = getAvailableBatches(available, amount);
+
+                    if (availableBatches <= 2.0) {
+                        newComponent.setLowStock(true);
+                        stockState = true;
+                        builder.append("1").append(":");
+                    } else builder.append("0").append(":");
+                }
+
+                newProduct.setLowStock(stockState);
+                newProduct.setStockBatches(builder.toString());
                 int productId = productViewModel.insert(newProduct);
 
                 //subscribe the product to its components
@@ -121,16 +140,6 @@ public class ProductDialog extends DialogFragment {
                     Component newComponent = componentIdMap.get(componentId);
 
                     newComponent.setSubscribedProducts(newComponent.getSubscribedProducts() + productId + ":");
-
-                    //check if low stock
-                    double available = Double.parseDouble(newComponent.getAvailableAmount());
-                    double amount = Double.parseDouble(componentsId[i + 1]);
-
-                    double availableBatches = getAvailableBatches(available, amount);
-
-                    if (availableBatches <= 2.0)
-                        newComponent.setLowStock(true);
-
                     componentsViewModel.update(newComponent);
                 }
 

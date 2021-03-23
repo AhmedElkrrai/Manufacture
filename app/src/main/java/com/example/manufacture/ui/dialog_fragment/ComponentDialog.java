@@ -123,19 +123,39 @@ public class ComponentDialog extends DialogFragment {
             // check if low stock
             component.setLowStock(false);
 
-            double availableDD = Double.parseDouble(availableAmount);
+            double availableDouble = Double.parseDouble(availableAmount);
             for (Product sub : subscriptionsProducts) {
-                boolean productState = sub.isLowStock();
-
                 double amount = productAmountMap.get(sub);
-                double batchesAmount = getAvailableBatches(availableDD, amount);
+                double batchesAmount = getAvailableBatches(availableDouble, amount);
                 if (batchesAmount <= 2.0) {
                     component.setLowStock(true);
                     sub.setLowStock(true);
                 }
 
-                if (productState != sub.isLowStock())
-                    productViewModel.update(sub);
+                int state = 0;
+                StringBuilder builder = new StringBuilder();
+                String[] compArr = sub.getComponents().split(":");
+                String[] stateArr = sub.getStockBatches().split(":");
+
+                for (int i = 0; i < compArr.length; i += 2) {
+                    int compId = Integer.parseInt(compArr[i]);
+                    if (component.getId() == compId) {
+                        if (batchesAmount <= 2.0) {
+                            builder.append("1").append(":");
+                            ++state;
+                        } else builder.append("0").append(":");
+                    } else {
+                        String s = stateArr[i / 2];
+                        builder.append(s).append(":");
+                        state += Integer.parseInt(s);
+                    }
+                }
+
+                sub.setStockBatches(builder.toString());
+
+                sub.setLowStock(state != 0);
+
+                productViewModel.update(sub);
             }
 
             componentsViewModel.update(component);

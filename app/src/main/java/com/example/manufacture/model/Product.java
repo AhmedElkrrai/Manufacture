@@ -11,10 +11,12 @@ public class Product {
     private String productName;
     private String components;
     private boolean lowStock;
+    private String stockBatches;
 
     public Product(String productName, String components) {
         this.productName = productName;
         this.components = components;
+        this.stockBatches = "";
     }
 
     public int getId() {
@@ -47,5 +49,13 @@ public class Product {
 
     public void setLowStock(boolean lowStock) {
         this.lowStock = lowStock;
+    }
+
+    public String getStockBatches() {
+        return stockBatches;
+    }
+
+    public void setStockBatches(String stockBatches) {
+        this.stockBatches = stockBatches;
     }
 }
