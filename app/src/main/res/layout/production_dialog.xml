@@ -38,8 +38,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/batch_number"
-                android:inputType="phone"
                 android:imeOptions="actionDone"
+                android:inputType="phone"
+                android:maxLength="32"
+                android:textAlignment="viewStart"
+                android:textColor="@color/primary"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/patch_date_ET"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/_300sdp"
+            android:layout_height="@dimen/_58sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/_120sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            app:boxCornerRadiusBottomEnd="@dimen/_12sdp"
+            app:boxCornerRadiusBottomStart="@dimen/_12sdp"
+            app:boxCornerRadiusTopEnd="@dimen/_12sdp"
+            app:boxCornerRadiusTopStart="@dimen/_12sdp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/date_title"
+                android:imeOptions="actionDone"
+                android:inputType="date"
                 android:maxLength="32"
                 android:textAlignment="viewStart"
                 android:textColor="@color/primary"
@@ -49,9 +75,9 @@
 
         <LinearLayout
             android:id="@+id/linearlayout"
-            android:layout_marginTop="@dimen/_130sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_185sdp"
             android:orientation="horizontal">
 
             <TextView
@@ -81,9 +107,9 @@
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-             android:layout_below="@+id/linearlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/linearlayout"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/_195sdp">
 

@@ -106,6 +106,11 @@ public class ProductionDialog extends DialogFragment {
             //get patch number
             String patchNumber = binding.patchNumberET.getEditText().getText().toString();
 
+            //get date
+            String batchDate = binding.patchDateET.getEditText().getText().toString();
+            if (batchDate.isEmpty())
+                batchDate = getCurrentDate();
+
             if (patchNumber.isEmpty()) {
                 Toast.makeText(getActivity(), "Please Enter Batch Number First " + patchNumber, Toast.LENGTH_SHORT).show();
                 return;
@@ -155,7 +160,7 @@ public class ProductionDialog extends DialogFragment {
             }
 
             //start production
-            productionViewModel.insert(new Production(product.getId(), getCurrentDate(), patchNumber, product.getProductName()));
+            productionViewModel.insert(new Production(product.getId(), batchDate, patchNumber, product.getProductName()));
 
             //check is low stock and show caution
             productViewModel.update(product);
@@ -177,7 +182,7 @@ public class ProductionDialog extends DialogFragment {
         super.onResume();
         Objects.requireNonNull(getDialog()).getWindow().setBackgroundDrawableResource(R.drawable.edit_round_2);
         int width = getResources().getDimensionPixelSize(R.dimen._329sdp);
-        int height = getResources().getDimensionPixelSize(R.dimen._505sdp);
+        int height = getResources().getDimensionPixelSize(R.dimen._555sdp);
         getDialog().getWindow().setLayout(width, height);
     }
 }

@@ -32,4 +32,5 @@
     <string name="example_batch">102933_46673_15</string>
     <string name="delete">Delete</string>
     <string name="_continue">Continue</string>
+    <string name="date_title">Date</string>
 </resources>
